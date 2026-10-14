@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>成都新局・山河算策</title><body><h1>成都新局</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 12,
+  "title": "成都新局",
+  "subtitle": "一城春色，百業重生",
+  "place": "成都",
+  "season": "春",
+  "intro": "成都的市集重新開張，百姓卻為糧倉分配爭論不休。要贏得益州，先讓每一份糧食都有公正的去處。",
+  "boss": "劉璋軍統領",
+  "puzzle": {
+    "name": "成都糧倉"
+  },
+  "clues": [
+    {
+      "name": "糧倉小吏"
+    },
+    {
+      "name": "織坊掌櫃"
+    }
+  ],
+  "recruit": "法正",
+  "recruitText": "善算者知進退，善治者知民心。讓我們一起重整益州。",
+  "side": "織坊的染料",
+  "sideText": "南方廢亭裡堆著一批急需的染料。",
+  "world": {
+    "theme": "town",
+    "flipX": false,
+    "flipY": false,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "成都沃野水渠",
+      "riverX": 52,
+      "riverWidth": 3,
+      "riverMeander": 1,
+      "peaks": [
+        [
+          72,
+          9,
+          18,
+          12,
+          2
+        ],
+        [
+          35,
+          54,
+          13,
+          10,
+          1.4
+        ]
+      ],
+      "features": [
+        "field",
+        "pavilion",
+        "sacks"
+      ],
+      "enemyNames": [
+        "益州城兵",
+        "劉璋軍槍兵",
+        "劉璋軍刀兵",
+        "益州伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "成都灌渠",
+      "grass": [
+        0.32,
+        0.47,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.6,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 12,
+  "history": {
+    "era": "西元 214 年起・劉備取得成都",
+    "kind": "史實背景",
+    "body": "劉璋在成都投降後，劉備取得益州。成都成為他重要的政治與經濟據點。接管一個地區，除了任用人才，也需要恢復生產、維持秩序，讓百姓能繼續生活。",
+    "note": "糧倉爭議、織坊與分配機關為遊戲創作。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "你讓糧倉有序、百業重生。願你繼續把答案說清楚、把理由想完整，讓知識成為照顧他人的本領。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>虎牢風雲・山河算策</title><body><h1>虎牢風雲</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 4,
+  "title": "虎牢風雲",
+  "subtitle": "群雄聚首，關山如鐵",
+  "place": "虎牢關",
+  "season": "秋",
+  "intro": "聯軍旗幟遮蔽原野，關前鐵騎如雷。你與關張並肩，穿過斥候營，找出兩路軍隊會師的時間。",
+  "boss": "虎牢守將",
+  "puzzle": {
+    "name": "聯軍號令台"
+  },
+  "clues": [
+    {
+      "name": "聯軍斥候"
+    },
+    {
+      "name": "軍中鼓手"
+    }
+  ],
+  "recruit": "公孫贊",
+  "recruitText": "舊日同窗，今日同袍。讓我看看你的兵法。",
+  "side": "遺落的軍旗",
+  "sideText": "把南方戰場的軍旗送回，鼓舞聯軍士氣。",
+  "world": {
+    "theme": "camp",
+    "flipX": false,
+    "flipY": false,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "虎牢峽谷關城",
+      "riverX": 51,
+      "riverWidth": 3,
+      "riverMeander": 0,
+      "peaks": [
+        [
+          67,
+          7,
+          14,
+          15,
+          13
+        ],
+        [
+          68,
+          57,
+          18,
+          10,
+          11
+        ],
+        [
+          34,
+          48,
+          10,
+          13,
+          5
+        ]
+      ],
+      "features": [
+        "watchtower",
+        "palisade",
+        "banner"
+      ],
+      "enemyNames": [
+        "董卓軍步卒",
+        "西涼槍兵",
+        "董卓軍刀兵",
+        "西涼伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.39,
+        0.43,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.25,
+      "forestCount": 2
+    }
+  },
+  "questionKey": 4,
+  "history": {
+    "era": "西元 190 年・討董聯軍時期",
+    "kind": "演義取材",
+    "body": "董卓掌握朝廷後，關東各地勢力組成聯軍討伐，東漢的權力更加分散。虎牢關與「三英戰呂布」因《三國演義》而廣為人知；小說中的單挑場面，不能直接視為史書記載。",
+    "note": "聯軍討董有歷史背景；本章虎牢戰鬥依演義氣氛改編。",
+    "source": {
+      "label": "《三國志・先主傳》及裴松之注",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "關山再高，也擋不住肯思考的你。你已學會從條件中找出規律；下一道難題，也能用清楚的步驟慢慢破解。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

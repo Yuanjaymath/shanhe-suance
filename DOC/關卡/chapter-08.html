@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>長坂護民・山河算策</title><body><h1>長坂護民</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 8,
+  "title": "長坂護民",
+  "subtitle": "一騎回身，千家得生",
+  "place": "長坂",
+  "season": "秋",
+  "intro": "追兵揚起漫天塵土，百姓擁向渡口。你必須讓車隊與船隊協調，替所有人爭取渡江的時機。",
+  "boss": "曹軍追兵統領",
+  "puzzle": {
+    "name": "渡江調度台"
+  },
+  "clues": [
+    {
+      "name": "船夫"
+    },
+    {
+      "name": "車隊領隊"
+    }
+  ],
+  "recruit": "簡雍",
+  "recruitText": "我不會舞槍，但會讓緊張的人笑一笑。這也是本事。",
+  "side": "走失的行囊",
+  "sideText": "幫難民找回南邊草亭的家書。",
+  "world": {
+    "theme": "river",
+    "flipX": false,
+    "flipY": false,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "長坂漢水渡口",
+      "riverX": 42,
+      "riverWidth": 10,
+      "riverMeander": 4,
+      "peaks": [
+        [
+          72,
+          8,
+          16,
+          12,
+          4
+        ],
+        [
+          31,
+          54,
+          15,
+          9,
+          2.5
+        ]
+      ],
+      "features": [
+        "cart",
+        "dock",
+        "tent"
+      ],
+      "enemyNames": [
+        "曹軍追兵",
+        "曹軍騎兵",
+        "曹軍弓兵",
+        "曹軍伏兵"
+      ],
+      "fleet": 7,
+      "winter": false,
+      "riverName": "漢水",
+      "grass": [
+        0.32,
+        0.46,
+        0.34
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.19,
+        0.39,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.45,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 8,
+  "history": {
+    "era": "西元 208 年・長坂之戰",
+    "kind": "史實背景",
+    "body": "曹操南下荊州，劉備向南撤退，許多百姓隨行。隊伍在當陽長坂遭到追擊，趙雲保護劉備家眷，張飛據水斷橋拒敵。這段歷史也讓人看見戰爭中撤離百姓的艱難。",
+    "note": "船車調度機關與簡雍的章節任務是遊戲改編。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "你在紛亂中保持冷靜，為大家找到前路。遇到複雜的題目，也試著先整理已知條件，再決定下一步。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

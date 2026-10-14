@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>流離與重聚・山河算策</title><body><h1>流離與重聚</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 6,
+  "title": "流離與重聚",
+  "subtitle": "失去城池，不失其志",
+  "place": "汝南",
+  "season": "冬",
+  "intro": "舊旗破碎，故人失散。你沿山路尋找伙伴，驛站的一封信帶來熟悉的名字：趙雲。",
+  "boss": "追擊騎將",
+  "puzzle": {
+    "name": "驛站密信"
+  },
+  "clues": [
+    {
+      "name": "驛卒"
+    },
+    {
+      "name": "行腳商"
+    }
+  ],
+  "recruit": "趙雲",
+  "recruitText": "亂軍之中，雲只願護住身後之人。願與主公同行。",
+  "side": "故人的銀槍",
+  "sideText": "南方古亭裡有一柄熟悉的銀槍。",
+  "world": {
+    "theme": "mountain",
+    "flipX": true,
+    "flipY": false,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "汝南流離古道",
+      "riverX": 43,
+      "riverWidth": 5,
+      "riverMeander": 3,
+      "peaks": [
+        [
+          73,
+          10,
+          16,
+          10,
+          5
+        ],
+        [
+          37,
+          49,
+          12,
+          12,
+          3
+        ]
+      ],
+      "features": [
+        "cart",
+        "tent",
+        "banner"
+      ],
+      "enemyNames": [
+        "曹軍追兵",
+        "曹軍騎兵",
+        "曹軍刀兵",
+        "曹軍伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.39,
+        0.43,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.5,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 6,
+  "history": {
+    "era": "西元 196～201 年前後・輾轉各地",
+    "kind": "史實背景",
+    "body": "劉備失去徐州後，曾先後依附不同勢力，也在汝南活動，後來前往荊州投靠劉表。亂世中的道路並不筆直，部眾的分散、重聚與重新出發，是這段經歷的重要面貌。",
+    "note": "本章以汝南串連流離經歷；密信、尋槍與趙雲重聚細節為改編。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "走過失散與重聚，你仍沒有放棄。暫時答不出來，不代表學不會；回頭整理線索，就是重新出發的第一步。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

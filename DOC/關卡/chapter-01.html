@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>桃園結義・山河算策</title><body><h1>桃園結義</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 1,
+  "title": "桃園結義",
+  "subtitle": "同心之盟，起於微末",
+  "place": "桃園",
+  "season": "春",
+  "intro": "桃花初開，兩位壯士正在村中等候。關羽看重信義，張飛心繫百姓。替義勇軍準備物資，三人的命運將從此相連。",
+  "boss": "山寨督軍",
+  "puzzle": {
+    "name": "結義祭壇"
+  },
+  "clues": [
+    {
+      "name": "關羽"
+    },
+    {
+      "name": "張飛"
+    }
+  ],
+  "recruit": "關羽",
+  "recruitText": "某願以此身護百姓。先讓我看看你如何分配軍需。",
+  "side": "桃園故酒",
+  "sideText": "為結義尋回藏在古井附近的一罈老酒。",
+  "world": {
+    "theme": "orchard",
+    "flipX": false,
+    "flipY": true,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "桃園丘陵",
+      "riverX": 48,
+      "riverWidth": 4,
+      "riverMeander": 2,
+      "peaks": [
+        [
+          66,
+          8,
+          18,
+          12,
+          2.2
+        ],
+        [
+          36,
+          51,
+          14,
+          12,
+          1.4
+        ]
+      ],
+      "features": [
+        "orchard",
+        "altar",
+        "field"
+      ],
+      "enemyNames": [
+        "桃園山賊",
+        "山寨刀兵",
+        "山寨槍兵",
+        "山寨伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.32,
+        0.47,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.95,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 1,
+  "history": {
+    "era": "東漢末年・約西元 184 年前後",
+    "kind": "演義取材",
+    "body": "劉備、關羽、張飛長年並肩作戰，史書記下他們親如兄弟的情誼。大家熟悉的「桃園三結義」儀式，則出自小說《三國演義》，不能把小說中的每個細節都當成史實。",
+    "note": "本章以演義的結義故事表現信任與合作。",
+    "source": {
+      "label": "文化部國家文化記憶庫・桃園三結義",
+      "url": "https://tcmb.culture.tw/zh-tw/detail?id=20000017299&indexCode=MOCCOLLECTIONS"
+    }
+  },
+  "encouragement": "你學會了把力量與伙伴分享。遇到難題時，願你敢於提問、願意傾聽；一起想辦法，就能走得更遠。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

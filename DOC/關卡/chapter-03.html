@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>亂世立足・山河算策</title><body><h1>亂世立足</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 3,
+  "title": "亂世立足",
+  "subtitle": "安一方土，護一方人",
+  "place": "安喜",
+  "season": "秋",
+  "intro": "烽煙暫歇，荒蕪的村落等著重建。山賊盯上新糧倉，你必須修路、找回物資，再清除山道上的威脅。",
+  "boss": "礦道匪首",
+  "puzzle": {
+    "name": "採石機關"
+  },
+  "clues": [
+    {
+      "name": "石匠"
+    },
+    {
+      "name": "學堂先生"
+    }
+  ],
+  "recruit": "田豐",
+  "recruitText": "先安民，再論兵。你的算策值得一試。",
+  "side": "失竊的秤砣",
+  "sideText": "商人丟了秤砣，傳聞被丟在南方舊驛。",
+  "world": {
+    "theme": "mountain",
+    "flipX": true,
+    "flipY": true,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "安喜山麓礦道",
+      "riverX": 45,
+      "riverWidth": 3,
+      "riverMeander": 3,
+      "peaks": [
+        [
+          55,
+          7,
+          16,
+          13,
+          9
+        ],
+        [
+          83,
+          46,
+          13,
+          17,
+          7
+        ],
+        [
+          35,
+          56,
+          12,
+          8,
+          5
+        ]
+      ],
+      "features": [
+        "quarry",
+        "watchtower",
+        "palisade"
+      ],
+      "enemyNames": [
+        "礦道匪兵",
+        "山匪刀兵",
+        "礦道槍兵",
+        "山匪伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.32,
+        0.46,
+        0.34
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.4,
+      "forestCount": 3
+    }
+  },
+  "questionKey": 3,
+  "history": {
+    "era": "東漢末年・黃巾戰事之後",
+    "kind": "史實背景",
+    "body": "劉備參與平亂後，曾出任安喜縣尉，這是協助地方治安的官職。東漢後期，朝廷與地方的矛盾愈來愈深；要讓百姓安居，除了作戰，也需要糧食、道路與公正的治理。",
+    "note": "史書記載任官安喜；重建村落、田豐同行與採石任務是遊戲創作。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "你不只跨過關隘，也替百姓築起安心生活的根基。把大問題分成幾個小步驟，穩穩完成，就是了不起的進步。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

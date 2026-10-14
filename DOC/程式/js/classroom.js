@@ -1,0 +1,20 @@
+/* Chapter-specific tuition. Lessons never charge money, food or health. */
+var Classroom=(()=>{
+ let ui,current=null;
+ function portrait(){const source=SpriteActors.portrait('ㄚ杰',chapter())||'DOC/美術素材/自製圖片/ㄚ杰.webp';return '<img src="'+source+'" alt="身著現代服裝的ㄚ杰">'}
+ function init(h){ui=h}
+ const chapter=()=>ui.state.chapter;
+ const topicName=type=>type==='gate'?'本關機關應用':Core.topics[type].name;
+ const rule=type=>type==='gate'?(Story.chapters[chapter()].puzzle.hint||(Story.chapters[chapter()].puzzle.type==='gcd'?'平均分到最多隊或鋪最大正方形，用最大公因數。先列出每個數的因數，再找最大的共同數。':'第一次再次同時發生，用最小公倍數。先列出各週期的倍數，再找最小的共同數。')):Core.topics[type].rule;
+ function question(type){if(type!=='gate')return Core.question(chapter(),{type});const ch=PuzzleBank.practice(chapter()),p=ch.puzzle,a=p.answer,options=new Set([a]);for(let d=1;options.size<4;d++)options.add(a+d);const opts=[...options];for(let i=opts.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[opts[i],opts[j]]=[opts[j],opts[i]]}return {text:ch.clues.map(c=>c.text).join(' ')+p.text,answer:a,options:opts,explain:p.explain,topic:'本關機關應用',type:'gate'}}
+ function tutor(title,text,actions=[]){const c=ui.modal(title,'ㄚ杰課後班 · 掌櫃解說');ScreenUI.mode('dialogue');c.classList.add('classroom');c.innerHTML='<div class="dialogue-portrait ajie-portrait">'+portrait()+'</div><p class="dialogue-text"></p><div class="dialogue-actions"></div>';for(const a of actions)ui.button(a.text,a.run,a.primary?'primary':'secondary',c.querySelector('.dialogue-actions'));ScreenUI.dialogue(c,text,'')}
+ function open(){current=null;const c=ui.modal('ㄚ杰課後班',Story.chapters[chapter()].title+' · 免費學習');c.classList.add('classroom');c.innerHTML='<div class="classroom-welcome">'+portrait()+'<p>我是掌櫃ㄚ杰，從現代穿越來教數學！<br>不懂就問，答錯也不扣錢、不受傷。<br>選一種本章題型，我陪你一步步學。</p></div><div class="lesson-list"></div>';const types=[...Core.profile(chapter()).types,'gate'];for(const type of types){const b=ui.button(topicName(type)+' →',()=>lesson(type),'secondary',c.querySelector('.lesson-list'));b.dataset.lesson=type}ui.button('返回三國世界',ui.close,'text-button',c)}
+ function lesson(type){tutor(topicName(type)+'・先學方法',rule(type),[{text:'看一題例題',primary:true,run:()=>example(type,question(type))},{text:'自己試一題',run:()=>practice(type)},{text:'返回課表',run:open}])}
+ function example(type,q){tutor('ㄚ杰的例題',q.text,[{text:'請ㄚ杰示範解法',primary:true,run:()=>tutor('ㄚ杰一步步說明',q.explain,[{text:'換個數字自己練',primary:true,run:()=>practice(type)},{text:'重看例題',run:()=>example(type,q)},{text:'返回課表',run:open}])},{text:'返回方法',run:()=>lesson(type)}])}
+ function practice(type){current={type,q:question(type),answered:false};renderPractice()}
+ function renderPractice(){const ctx=current;if(!ctx)return open();const q=ctx.q,c=ui.modal(topicName(ctx.type)+'・練習','ㄚ杰課後班 · 答錯沒關係');ScreenUI.mode('quiz');c.classList.add('classroom');c.innerHTML='<div class="teacher-mini">'+portrait()+'<span>ㄚ杰陪你練習 · 不扣生命或物資</span></div><p class="question classroom-question"></p><div class="answers"></div><div class="classroom-controls"></div>';c.querySelector('.question').textContent=q.text;
+  for(const n of q.options)ui.button(String(n),()=>{if(ctx.answered)return;ctx.answered=true;const s=ui.state,ok=n===q.answer;s.total++;if(ok){s.correct++;ui.earn('answer');ui.earn('lesson','lesson-'+ctx.type)}else{s.wrong.push({text:q.text,explain:q.explain});s.wrong=s.wrong.slice(-60)}ui.tone(ok);ui.save();ui.update();tutor(ok?'答對了！ㄚ杰為你喝采':'別急，ㄚ杰陪你看懂',(ok?'做得好！經驗已累積，看看解法：':'這題先不計較對錯，看看關鍵：')+q.explain,[{text:'再練一題',primary:true,run:()=>practice(ctx.type)},{text:'回看方法',run:()=>lesson(ctx.type)},{text:'返回課表',run:open}])},'answer',c.querySelector('.answers'));
+  const row=c.querySelector('.classroom-controls');ui.button('我不會・請ㄚ杰說明',()=>tutor('ㄚ杰的小提示',rule(ctx.type),[{text:'回題目試試',primary:true,run:renderPractice},{text:'看完整解法',run:()=>tutor('ㄚ杰一步步說明',q.explain,[{text:'回題目試試',primary:true,run:renderPractice},{text:'換一題練習',run:()=>practice(ctx.type)}])}]),'secondary',row);ui.button('換一題',()=>practice(ctx.type),'secondary',row);ui.button('返回課表',open,'text-button',row)
+ }
+ return {init,open,get current(){return current}};
+})();

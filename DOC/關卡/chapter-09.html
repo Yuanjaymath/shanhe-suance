@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>赤壁聯盟・山河算策</title><body><h1>赤壁聯盟</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 9,
+  "title": "赤壁聯盟",
+  "subtitle": "東風一夜，江上千帆",
+  "place": "赤壁",
+  "season": "夏",
+  "intro": "江面戰船連成鐵壁。聯盟初成，每一步都須計算周密。穿越水寨，確認兩岸信號同步，再點亮反攻的烽火。",
+  "boss": "曹操",
+  "puzzle": {
+    "name": "赤壁烽火台"
+  },
+  "clues": [
+    {
+      "name": "周瑜"
+    },
+    {
+      "name": "黃蓋"
+    }
+  ],
+  "recruit": "魯肅",
+  "recruitText": "聯盟貴在信任，帳目貴在清楚。這兩樣你都得學。",
+  "side": "江上的密函",
+  "sideText": "尋回漂到南方岸邊的聯盟密函。",
+  "world": {
+    "theme": "river",
+    "flipX": false,
+    "flipY": true,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "赤壁長江水寨",
+      "riverX": 40,
+      "riverWidth": 24,
+      "riverMeander": 1,
+      "peaks": [
+        [
+          26,
+          8,
+          13,
+          15,
+          6
+        ],
+        [
+          79,
+          54,
+          16,
+          11,
+          7
+        ]
+      ],
+      "features": [
+        "dock",
+        "palisade",
+        "beacon"
+      ],
+      "enemyNames": [
+        "曹兵",
+        "曹軍弓兵",
+        "曹軍水兵",
+        "曹軍伏兵"
+      ],
+      "fleet": 28,
+      "winter": false,
+      "riverName": "長江",
+      "grass": [
+        0.32,
+        0.46,
+        0.34
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.19,
+        0.39,
+        0.48
+      ],
+      "sky": [
+        0.58,
+        0.67,
+        0.71
+      ],
+      "treeDensity": 0.4,
+      "forestCount": 3
+    }
+  },
+  "questionKey": 9,
+  "history": {
+    "era": "西元 208 年冬・赤壁之戰",
+    "kind": "史實背景",
+    "body": "曹操率軍南下後，孫權與劉備合作抵抗。孫劉聯軍在赤壁一帶擊退曹軍，火攻是戰事的重要一環。這場戰役使曹操未能迅速統一南方，影響了後來三國局勢的發展。",
+    "note": "史實戰役在冬季；遊戲的夏日場景、信號機關與敵將為改編。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "你讓兩岸信號相連，也讓伙伴的力量匯聚。學會找出週期與共同規律，複雜的安排就能變得清楚有序。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

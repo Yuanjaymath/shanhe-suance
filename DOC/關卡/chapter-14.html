@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>天下分歧・山河算策</title><body><h1>天下分歧</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 14,
+  "title": "天下分歧",
+  "subtitle": "此番提筆，改寫舊局",
+  "place": "荊州",
+  "season": "秋",
+  "intro": "【架空歷史篇】你收到荊州告急的消息。這一次，你可以依靠伙伴與情報改寫命運，讓救援先於噩耗抵達。",
+  "boss": "東吳水軍都督",
+  "puzzle": {
+    "name": "救援調度台"
+  },
+  "clues": [
+    {
+      "name": "江岸密使"
+    },
+    {
+      "name": "荊州守卒"
+    }
+  ],
+  "recruit": "關平",
+  "recruitText": "父親守城，我守信。主公，此番一定要平安歸來。",
+  "side": "未寄出的信",
+  "sideText": "南方客舍藏著一封能化解誤會的書信。",
+  "world": {
+    "theme": "river",
+    "flipX": true,
+    "flipY": false,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "荊州長江城塞",
+      "riverX": 44,
+      "riverWidth": 16,
+      "riverMeander": 2,
+      "peaks": [
+        [
+          76,
+          9,
+          14,
+          13,
+          4
+        ],
+        [
+          35,
+          54,
+          13,
+          10,
+          2
+        ]
+      ],
+      "features": [
+        "dock",
+        "watchtower",
+        "banner"
+      ],
+      "enemyNames": [
+        "東吳水兵",
+        "吳軍弓兵",
+        "東吳刀兵",
+        "吳軍伏兵"
+      ],
+      "fleet": 12,
+      "winter": false,
+      "riverName": "長江",
+      "grass": [
+        0.32,
+        0.46,
+        0.34
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.19,
+        0.39,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.55,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 14,
+  "history": {
+    "era": "西元 219 年的歷史岔路",
+    "kind": "架空歷史",
+    "body": "史實中，關羽北攻樊城時，孫權派兵奪取荊州；關羽敗走後被擒殺。失去荊州使劉備的勢力受挫。本遊戲從這裡改寫命運，讓玩家嘗試提前救援。",
+    "note": "從本章起是架空歷史；成功救援關羽不是真實歷史的結果。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "你把握線索，為故事開出新的可能。真正值得珍惜的，是你願意分析、合作並承擔選擇；把這份勇氣帶到下一程。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

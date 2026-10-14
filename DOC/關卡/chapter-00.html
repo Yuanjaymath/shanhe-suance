@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>涿郡少年・山河算策</title><body><h1>涿郡少年</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 0,
+  "title": "涿郡少年",
+  "subtitle": "一雙草鞋，一個天下",
+  "place": "涿郡",
+  "season": "春",
+  "intro": "村外的糧車失蹤了。你仍是織席販履的劉備，卻無法對飢餓的鄉親袖手旁觀。沿著河岸找出線索，讓第一面義旗升起。",
+  "boss": "黑風寨主",
+  "puzzle": {
+    "name": "糧袋木鎖"
+  },
+  "clues": [
+    {
+      "name": "村長"
+    },
+    {
+      "name": "渡口阿婆"
+    }
+  ],
+  "recruit": "阿青",
+  "recruitText": "我熟悉山林。你若懂得公平分糧，我願做你的斥候。",
+  "side": "糧袋尋蹤",
+  "sideText": "找到南方廢亭的糧箱，帶回鄉親的口糧。",
+  "world": {
+    "theme": "orchard",
+    "flipX": false,
+    "flipY": false,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "涿郡田野",
+      "riverX": 43,
+      "riverWidth": 4,
+      "riverMeander": 2,
+      "peaks": [
+        [
+          72,
+          7,
+          18,
+          12,
+          2
+        ],
+        [
+          38,
+          53,
+          13,
+          10,
+          1.3
+        ]
+      ],
+      "features": [
+        "orchard",
+        "well",
+        "field"
+      ],
+      "enemyNames": [
+        "山寨步卒",
+        "山寨槍兵",
+        "山寨刀兵",
+        "山寨伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.32,
+        0.47,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.78,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 0,
+  "history": {
+    "era": "東漢末年・黃巾起事前",
+    "kind": "史實背景",
+    "body": "東漢末年，地方動盪，許多人生活困苦。劉備出身涿郡，年少時與母親靠織席、賣草鞋維生，也曾向盧植求學。這段起點，讓我們看見英雄也有平凡的生活。",
+    "note": "本章救糧、山寨與阿青的故事為遊戲創作。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "從一雙草鞋出發，你已用耐心找出線索、解開難題。願你記住：每一次認真思考，都能成為幫助別人的力量。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

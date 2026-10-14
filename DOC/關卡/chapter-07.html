@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>荊州尋賢・山河算策</title><body><h1>荊州尋賢</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 7,
+  "title": "荊州尋賢",
+  "subtitle": "草廬三顧，問計山河",
+  "place": "隆中",
+  "season": "春",
+  "intro": "竹影掩映草廬，溪水流過田間。水鏡先生說，尋賢之前，先學會聽人說話。兩條不起眼的線索或許正是考驗。",
+  "boss": "山道惡客",
+  "puzzle": {
+    "name": "隆中石陣"
+  },
+  "clues": [
+    {
+      "name": "水鏡先生"
+    },
+    {
+      "name": "草廬童子"
+    }
+  ],
+  "recruit": "諸葛亮",
+  "recruitText": "天下如局，算術如燈。願借一點微光，照亮主公前路。",
+  "side": "羽扇與故書",
+  "sideText": "替童子尋回南方書亭遺落的書卷。",
+  "world": {
+    "theme": "orchard",
+    "flipX": true,
+    "flipY": true,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "隆中草廬山谷",
+      "riverX": 48,
+      "riverWidth": 4,
+      "riverMeander": 2,
+      "peaks": [
+        [
+          69,
+          8,
+          20,
+          15,
+          7
+        ],
+        [
+          79,
+          52,
+          13,
+          12,
+          5
+        ],
+        [
+          35,
+          52,
+          14,
+          10,
+          3
+        ]
+      ],
+      "features": [
+        "bamboo",
+        "pavilion",
+        "orchard"
+      ],
+      "enemyNames": [
+        "山道匪徒",
+        "山匪槍兵",
+        "山匪刀兵",
+        "山匪伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.32,
+        0.47,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.95,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 7,
+  "history": {
+    "era": "西元 207 年前後・荊州尋賢",
+    "kind": "史實背景",
+    "body": "劉備在荊州期間拜訪諸葛亮，請教天下局勢。諸葛亮分析荊州、益州的地理與勢力，提出聯合孫權、逐步發展的方向。《出師表》也提到劉備三顧草廬的知遇。",
+    "note": "尋賢有史實依據；隆中石陣與童子的數學考驗是遊戲創作。",
+    "source": {
+      "label": "《三國志・諸葛亮傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷35"
+    }
+  },
+  "encouragement": "你用傾聽與思考，找到了同行的智慧。保持好奇，多問一句「為什麼」，每一次理解都會替前路點亮一盞燈。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

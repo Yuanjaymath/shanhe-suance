@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>黃巾烽火・山河算策</title><body><h1>黃巾烽火</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 2,
+  "title": "黃巾烽火",
+  "subtitle": "蒼天之下，百姓何辜",
+  "place": "潁川",
+  "season": "夏",
+  "intro": "黃巾軍盤踞原野，百姓在烽煙中流離。你率義勇軍趕來，先救人，再破陣。敵營的更鼓藏著進攻的時機。",
+  "boss": "黃巾渠帥",
+  "puzzle": {
+    "name": "更鼓陣門"
+  },
+  "clues": [
+    {
+      "name": "避難老翁"
+    },
+    {
+      "name": "營外樵夫"
+    }
+  ],
+  "recruit": "張飛",
+  "recruitText": "俺的嗓門再大，也比不上你算得準！一起打回糧倉去。",
+  "side": "烽火救糧",
+  "sideText": "敵軍把救濟糧藏在南坡，替百姓取回。",
+  "world": {
+    "theme": "camp",
+    "flipX": true,
+    "flipY": false,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "潁川黃巾營地",
+      "riverX": 39,
+      "riverWidth": 5,
+      "riverMeander": 1,
+      "peaks": [
+        [
+          72,
+          8,
+          15,
+          13,
+          2.3
+        ],
+        [
+          36,
+          52,
+          13,
+          10,
+          1.5
+        ]
+      ],
+      "features": [
+        "palisade",
+        "banner",
+        "tent"
+      ],
+      "enemyNames": [
+        "黃巾兵",
+        "黃巾刀兵",
+        "黃巾槍兵",
+        "黃巾伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.39,
+        0.43,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.35,
+      "forestCount": 3
+    }
+  },
+  "questionKey": 2,
+  "history": {
+    "era": "西元 184 年・中平元年",
+    "kind": "史實背景",
+    "body": "張角等人發動黃巾起事，追隨者以黃巾作為標記，許多地區陷入戰事。朝廷派兵平亂，各地也招募義兵。戰爭讓百姓流離，也成為東漢走向分裂的重要轉折。",
+    "note": "劉備曾參與討伐黃巾；本章潁川任務與更鼓機關是遊戲改編。",
+    "source": {
+      "label": "《後漢書・孝靈帝紀》",
+      "url": "https://zh.wikisource.org/wiki/後漢書/卷8"
+    }
+  },
+  "encouragement": "烽火之中，你仍一步一步找到了答案。勇敢不是從不犯錯，而是願意檢查方法、修正想法，再試一次。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

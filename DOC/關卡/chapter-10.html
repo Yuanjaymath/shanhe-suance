@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>荊南四郡・山河算策</title><body><h1>荊南四郡</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 10,
+  "title": "荊南四郡",
+  "subtitle": "四城煙火，漸成家國",
+  "place": "長沙",
+  "season": "夏",
+  "intro": "荊南城鎮百廢待興，各地豪傑等待明主。你可先探訪市集，再巡查山道，從百姓口中了解守將的心意。",
+  "boss": "韓玄",
+  "puzzle": {
+    "name": "四郡分糧台"
+  },
+  "clues": [
+    {
+      "name": "郡中主簿"
+    },
+    {
+      "name": "老兵"
+    }
+  ],
+  "recruit": "黃忠",
+  "recruitText": "老弓尚能開，老將尚能戰。且看你的算策能否服人。",
+  "side": "老兵的家書",
+  "sideText": "南方亭子藏著一封沒有送達的家書。",
+  "world": {
+    "theme": "town",
+    "flipX": true,
+    "flipY": false,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "長沙湘水四郡",
+      "riverX": 51,
+      "riverWidth": 9,
+      "riverMeander": 3,
+      "peaks": [
+        [
+          76,
+          9,
+          16,
+          12,
+          4
+        ],
+        [
+          35,
+          54,
+          13,
+          10,
+          2
+        ]
+      ],
+      "features": [
+        "field",
+        "watchtower",
+        "dock"
+      ],
+      "enemyNames": [
+        "荊南守兵",
+        "郡城槍兵",
+        "荊南刀兵",
+        "郡城伏兵"
+      ],
+      "fleet": 7,
+      "winter": false,
+      "riverName": "湘水",
+      "grass": [
+        0.32,
+        0.46,
+        0.34
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.65,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 10,
+  "history": {
+    "era": "西元 208～209 年前後・經營荊南",
+    "kind": "史實背景",
+    "body": "赤壁之戰後，劉備向荊州南部發展，武陵、長沙、桂陽、零陵四郡歸附。取得土地後，還要面對安頓居民、分配糧食與建立地方秩序等問題。",
+    "note": "本章分糧任務為創作；演義中的關羽與黃忠對戰不宜直接當成史實。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "你將一份份物資分配妥當，也把方法學得更扎實。算得準，更要想得明白；願你把所學用在生活中的公平與合作。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

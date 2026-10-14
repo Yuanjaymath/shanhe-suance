@@ -1,0 +1,5 @@
+/* Core UI starts only after the independent chapter HTML files have loaded. */
+(async()=>{const newButton=document.getElementById('new-game'),continueButton=document.getElementById('continue-game');newButton.disabled=continueButton.disabled=true;
+ try{await ChapterLoader.ready;await SpriteActors.ready;if(SpriteActors.status.errors.length)throw Error(SpriteActors.status.errors.join('、'));for(const file of ['DOC/程式/js/puzzle-bank.js','DOC/程式/js/game.js'])await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=file;script.onload=resolve;script.onerror=reject;document.body.appendChild(script)});if(!Renderer.status.ready)throw new Error(Renderer.status.error||'此瀏覽器無法啟動 3D 畫面。');newButton.disabled=false;document.getElementById('boot-status').textContent='3D 山河已就緒 · 十八章旅程';}
+ catch(error){newButton.disabled=continueButton.disabled=true;document.getElementById('boot-status').textContent='載入失敗：'+(error.message||'請保留完整 DOC 資料夾。');console.error(error)}
+})();

@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>入蜀之路・山河算策</title><body><h1>入蜀之路</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 11,
+  "title": "入蜀之路",
+  "subtitle": "蜀道雲深，前路可期",
+  "place": "葭萌關",
+  "season": "秋",
+  "intro": "古道在山間蜿蜒，關隘藏在雲霧之後。商旅說機關與巡邏同時運轉，只有算準週期，才能平安通行。",
+  "boss": "蜀道守將",
+  "puzzle": {
+    "name": "古道轉輪"
+  },
+  "clues": [
+    {
+      "name": "山中商旅"
+    },
+    {
+      "name": "守路老人"
+    }
+  ],
+  "recruit": "龐統",
+  "recruitText": "鳳雛也有迷路的時候，好在數字從不說謊。",
+  "side": "迷途商隊",
+  "sideText": "找回南方營地的貨物，助商隊走出蜀道。",
+  "world": {
+    "theme": "mountain",
+    "flipX": true,
+    "flipY": true,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "葭萌蜀道峭壁",
+      "riverX": 44,
+      "riverWidth": 4,
+      "riverMeander": 2,
+      "peaks": [
+        [
+          64,
+          7,
+          18,
+          14,
+          12
+        ],
+        [
+          79,
+          49,
+          14,
+          17,
+          10
+        ],
+        [
+          35,
+          54,
+          13,
+          10,
+          6
+        ]
+      ],
+      "features": [
+        "watchtower",
+        "palisade",
+        "bamboo"
+      ],
+      "enemyNames": [
+        "益州守兵",
+        "蜀道槍兵",
+        "益州刀兵",
+        "蜀道伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.39,
+        0.43,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.45,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 11,
+  "history": {
+    "era": "西元 211～214 年・入蜀與益州之爭",
+    "kind": "史實背景",
+    "body": "益州的劉璋起初邀請劉備入蜀，協助應對漢中張魯的威脅，後來雙方轉為交戰。蜀道山高路險，軍隊運輸糧食、安排補給，都受到地形限制。",
+    "note": "龐統參與入蜀；古道轉輪與商隊任務為遊戲創作。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "蜀道雖險，你已一步步走過。多步驟的題目也像山路：看準眼前這一步，再把每一步的結果接起來。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>太平新世・山河算策</title><body><h1>太平新世</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 17,
+  "title": "太平新世",
+  "subtitle": "兵戈已歇，學問無涯",
+  "place": "太平城",
+  "season": "春",
+  "intro": "天下已定，你終於能放慢腳步。故人仍在城中，課堂傳來讀書聲。補完未竟的旅途，或再赴試煉，看看自己成長了多少。",
+  "boss": "試煉宗師",
+  "puzzle": {
+    "name": "太平書院"
+  },
+  "clues": [
+    {
+      "name": "書院先生"
+    },
+    {
+      "name": "書院學生"
+    }
+  ],
+  "recruit": "小書生",
+  "recruitText": "以前怕數學，如今想當軍師。主公，可以教教我嗎？",
+  "side": "春日書香",
+  "sideText": "尋回南方亭子的一箱新書，送給書院。",
+  "world": {
+    "theme": "orchard",
+    "flipX": false,
+    "flipY": true,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "太平城田園湖畔",
+      "riverX": 47,
+      "riverWidth": 8,
+      "riverMeander": 3,
+      "peaks": [
+        [
+          75,
+          9,
+          17,
+          12,
+          2
+        ],
+        [
+          35,
+          54,
+          14,
+          10,
+          1.4
+        ]
+      ],
+      "features": [
+        "orchard",
+        "pavilion",
+        "well"
+      ],
+      "enemyNames": [
+        "書院試煉兵",
+        "演武槍兵",
+        "演武刀兵",
+        "演武試煉兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "太平湖",
+      "grass": [
+        0.32,
+        0.47,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.9,
+      "forestCount": 5
+    }
+  },
+  "questionKey": 17,
+  "history": {
+    "era": "架空的太平新世・回望三國",
+    "kind": "架空歷史",
+    "body": "三國通常指魏、蜀、吳並立的時代，前後經歷長期戰爭與政權更替。本章的太平城，是遊戲寄託安居、學習與合作的理想。歷史有真實的結局，故事也能讓我們思考更好的未來。",
+    "note": "太平城與劉備和伙伴共享太平的結局都是架空創作。",
+    "source": {
+      "label": "《晉書・武帝紀》",
+      "url": "https://zh.wikisource.org/zh-hant/晉書/卷003"
+    }
+  },
+  "encouragement": "恭喜走完十八章山河！你願意思考、願意再試，也願意與伙伴同行。旅程可以通關，學習沒有終點；把好奇與勇氣帶回日常吧。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

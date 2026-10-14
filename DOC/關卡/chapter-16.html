@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>天下歸一・山河算策</title><body><h1>天下歸一</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 16,
+  "title": "天下歸一",
+  "subtitle": "山河重整，萬家燈明",
+  "place": "洛陽",
+  "season": "春",
+  "intro": "最後的城門就在眼前。一路走來，你記住了多少名字，又護住了多少炊煙？完成最後的調度，為戰亂畫上句點。",
+  "boss": "曹魏都督",
+  "puzzle": {
+    "name": "天下歸一大陣"
+  },
+  "clues": [
+    {
+      "name": "百姓代表"
+    },
+    {
+      "name": "各郡使者"
+    }
+  ],
+  "recruit": "馬超",
+  "recruitText": "長槍曾指向敵陣，此後願守四方安寧。",
+  "side": "歸鄉的路引",
+  "sideText": "尋回南方驛亭的路引，讓最後一批流民回家。",
+  "world": {
+    "theme": "town",
+    "flipX": false,
+    "flipY": false,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "洛陽城郭洛水",
+      "riverX": 42,
+      "riverWidth": 7,
+      "riverMeander": 2,
+      "peaks": [
+        [
+          74,
+          8,
+          18,
+          12,
+          2.3
+        ],
+        [
+          35,
+          53,
+          12,
+          10,
+          1.5
+        ]
+      ],
+      "features": [
+        "pavilion",
+        "watchtower",
+        "banner"
+      ],
+      "enemyNames": [
+        "魏軍城兵",
+        "魏軍弓兵",
+        "魏軍刀兵",
+        "魏軍伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "洛水",
+      "grass": [
+        0.32,
+        0.46,
+        0.34
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.3,
+      "forestCount": 2
+    }
+  },
+  "questionKey": 16,
+  "history": {
+    "era": "史實對照・西元 280 年西晉統一",
+    "kind": "架空歷史",
+    "body": "真實歷史中，蜀漢在西元 263 年滅亡，西晉於 265 年取代曹魏，並在 280 年滅吳，結束三國分立。本章由劉備一方走向天下歸一，是遊戲創作的另一種結局。",
+    "note": "請分清楚：本章的統一者與過程，並非史實中的西晉統一。",
+    "source": {
+      "label": "《晉書・武帝紀》",
+      "url": "https://zh.wikisource.org/zh-hant/晉書/卷003"
+    }
+  },
+  "encouragement": "一座座關隘，見證你累積的智慧。你已證明，難題可以拆解、錯誤可以修正；接下來，也請相信持續學習的自己。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

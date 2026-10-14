@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>漢中爭鋒・山河算策</title><body><h1>漢中爭鋒</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 13,
+  "title": "漢中爭鋒",
+  "subtitle": "山高路險，糧道不絕",
+  "place": "漢中",
+  "season": "冬",
+  "intro": "群山之間，糧道就是生路。你必須穿過雪松林，讓兩路援軍同步抵達，突破高處敵營。",
+  "boss": "夏侯淵",
+  "puzzle": {
+    "name": "漢中援軍台"
+  },
+  "clues": [
+    {
+      "name": "黃忠"
+    },
+    {
+      "name": "法正"
+    }
+  ],
+  "recruit": "魏延",
+  "recruitText": "險路也能成活路。主公，讓我看看你的決斷。",
+  "side": "雪中的軍糧",
+  "sideText": "把南邊雪地的軍糧帶回大營。",
+  "world": {
+    "theme": "mountain",
+    "flipX": false,
+    "flipY": true,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "漢中定軍山谷",
+      "riverX": 39,
+      "riverWidth": 5,
+      "riverMeander": 3,
+      "peaks": [
+        [
+          65,
+          8,
+          19,
+          14,
+          10
+        ],
+        [
+          83,
+          50,
+          12,
+          15,
+          8
+        ],
+        [
+          32,
+          54,
+          13,
+          10,
+          5
+        ]
+      ],
+      "features": [
+        "watchtower",
+        "banner",
+        "palisade"
+      ],
+      "enemyNames": [
+        "曹軍山地兵",
+        "曹軍弓兵",
+        "曹軍刀兵",
+        "曹軍伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.39,
+        0.43,
+        0.28
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.45,
+      "forestCount": 3
+    }
+  },
+  "questionKey": 13,
+  "history": {
+    "era": "西元 217～219 年・漢中之戰",
+    "kind": "史實背景",
+    "body": "漢中連接關中與益州，是重要的軍事要地。劉備與曹操爭奪漢中，黃忠在定軍山一役擊殺夏侯淵。西元 219 年，劉備取得漢中，之後進位漢中王。",
+    "note": "援軍同步與雪地糧道任務為改編；場景季節不代表整場戰事的季節。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "你在險峻山路中算準調度，讓前線看見希望。難題需要耐心，也需要驗算；願你帶著這份踏實，迎向新的挑戰。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

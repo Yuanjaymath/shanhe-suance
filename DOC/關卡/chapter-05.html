@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>徐州守城・山河算策</title><body><h1>徐州守城</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 5,
+  "title": "徐州守城",
+  "subtitle": "城牆之外，是萬家燈火",
+  "place": "徐州",
+  "season": "春",
+  "intro": "徐州城門緊閉，流民聚集在河岸。你要守住的不只是城池，還有城中百姓對明天的盼望。",
+  "boss": "曹軍攻城先鋒",
+  "puzzle": {
+    "name": "守城軍械庫"
+  },
+  "clues": [
+    {
+      "name": "糧官"
+    },
+    {
+      "name": "陶謙"
+    }
+  ],
+  "recruit": "糜竺",
+  "recruitText": "我願出資助你安置百姓。能把帳算清，才能把城守穩。",
+  "side": "醫者的藥箱",
+  "sideText": "難民營急需南方驛亭的藥箱。",
+  "world": {
+    "theme": "town",
+    "flipX": false,
+    "flipY": true,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "徐州城防糧田",
+      "riverX": 46,
+      "riverWidth": 5,
+      "riverMeander": 1,
+      "peaks": [
+        [
+          72,
+          55,
+          20,
+          10,
+          1.8
+        ],
+        [
+          36,
+          8,
+          13,
+          9,
+          1.3
+        ]
+      ],
+      "features": [
+        "watchtower",
+        "field",
+        "sacks"
+      ],
+      "enemyNames": [
+        "曹軍步卒",
+        "曹軍攻城兵",
+        "曹軍弓兵",
+        "曹軍伏兵"
+      ],
+      "fleet": 0,
+      "winter": false,
+      "riverName": "山川溪流",
+      "grass": [
+        0.32,
+        0.46,
+        0.34
+      ],
+      "road": [
+        0.67,
+        0.58,
+        0.42
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.66,
+        0.75,
+        0.7
+      ],
+      "treeDensity": 0.3,
+      "forestCount": 2
+    }
+  },
+  "questionKey": 5,
+  "history": {
+    "era": "西元 193～194 年前後・徐州戰事",
+    "kind": "史實背景",
+    "body": "曹操進攻徐州時，陶謙向外求援，劉備隨田楷前來。陶謙去世後，劉備在地方人士支持下接掌徐州。城池的得失背後，是百姓的居所、田地與糧食。",
+    "note": "守城軍械庫、救助任務及敵將配置為遊戲改編。",
+    "source": {
+      "label": "《三國志・先主傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷32"
+    }
+  },
+  "encouragement": "你守住了城門，也守住了萬家燈火。仔細讀題、檢查單位，讓每一份努力都有方向；你的細心值得被看見。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>

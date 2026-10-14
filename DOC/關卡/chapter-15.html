@@ -1,0 +1,111 @@
+<!doctype html>
+<html lang="zh-Hant"><meta charset="utf-8"><title>北伐中原・山河算策</title><body><h1>北伐中原</h1><p>此檔管理本關劇情、人物與地圖設定；數學題由 DOC/題庫/questions.js 的 questionKey 對應。請由主程式進入遊戲。</p><a href="../../index.html">開啟山河算策</a>
+<script id="chapter-data" type="application/json">{
+  "id": 15,
+  "title": "北伐中原",
+  "subtitle": "出祁山，望故國",
+  "place": "祁山",
+  "season": "冬",
+  "intro": "大軍向北，原野鋪滿霜色。每一座關隘都關係後方的安穩。安排兩路軍隊會師，把漫長戰線連成一體。",
+  "boss": "司馬懿",
+  "puzzle": {
+    "name": "北伐會師台"
+  },
+  "clues": [
+    {
+      "name": "諸葛亮"
+    },
+    {
+      "name": "蜀軍糧官"
+    }
+  ],
+  "recruit": "姜維",
+  "recruitText": "學問與兵法，都要反覆推敲。願隨主公求一個太平。",
+  "side": "風雪驛書",
+  "sideText": "南方舊驛還留著最後一封前線軍報。",
+  "world": {
+    "theme": "mountain",
+    "flipX": true,
+    "flipY": true,
+    "entityOverrides": {},
+    "landscape": {
+      "name": "祁山北伐高原",
+      "riverX": 50,
+      "riverWidth": 3,
+      "riverMeander": 3,
+      "peaks": [
+        [
+          69,
+          8,
+          21,
+          17,
+          9
+        ],
+        [
+          79,
+          51,
+          16,
+          12,
+          7
+        ],
+        [
+          33,
+          52,
+          14,
+          13,
+          4
+        ]
+      ],
+      "features": [
+        "tent",
+        "banner",
+        "watchtower"
+      ],
+      "enemyNames": [
+        "魏軍步卒",
+        "魏軍弓兵",
+        "魏軍槍兵",
+        "魏軍伏兵"
+      ],
+      "fleet": 0,
+      "winter": true,
+      "riverName": "山川溪流",
+      "grass": [
+        0.69,
+        0.71,
+        0.68
+      ],
+      "road": [
+        0.63,
+        0.61,
+        0.53
+      ],
+      "water": [
+        0.25,
+        0.48,
+        0.48
+      ],
+      "sky": [
+        0.69,
+        0.75,
+        0.79
+      ],
+      "treeDensity": 0.18,
+      "forestCount": 2
+    }
+  },
+  "questionKey": 15,
+  "history": {
+    "era": "史實對照・西元 228～234 年諸葛亮北伐",
+    "kind": "架空歷史",
+    "body": "史實中，劉備於西元 223 年去世。後來由諸葛亮多次率軍北伐曹魏，艱難的山路與糧食補給影響行軍。本章延續遊戲的架空路線，讓劉備與伙伴繼續同行。",
+    "note": "劉備親自參與本章北伐是架空安排；不可與諸葛亮北伐的史實混同。",
+    "source": {
+      "label": "《三國志・諸葛亮傳》",
+      "url": "https://zh.wikisource.org/zh-hant/三國志/卷35"
+    }
+  },
+  "encouragement": "漫長戰線已被你一步步連起。進步常常來自反覆練習；願你保有耐心，讓每次修正都成為下一次成功的基礎。"
+}
+</script>
+<script>const chapter=JSON.parse(document.getElementById('chapter-data').textContent);if(parent!==window)parent.postMessage({type:'shanhe-chapter',chapter},'*');</script></body></html>
