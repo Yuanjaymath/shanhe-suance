@@ -67,8 +67,8 @@ var TerrainModels=(()=>{
  function ground(g,w){
   const paint=w.palette?.grass||[.34,.46,.29];
   for(let y=0;y<w.height;y++)for(let x=0;x<w.width;x++){
-   const type=w.tiles[y*w.width+x];if(type===2||type===3)continue;
-   const point=(xx,zz)=>[xx,World.elevation(w,xx,zz)-.035,zz],normal=(xx,zz)=>unit([World.elevation(w,xx-.1,zz)-World.elevation(w,xx+.1,zz),.2,World.elevation(w,xx,zz-.1)-World.elevation(w,xx,zz+.1)]);
+   const type=w.tiles[y*w.width+x];if(type===2||type===3||LandscapeView.mouth(w,x,y))continue;
+   const point=(xx,zz)=>[xx,LandscapeView.edgeHeight(w,xx,zz)-.035,zz],normal=(xx,zz)=>unit([World.elevation(w,xx-.1,zz)-World.elevation(w,xx+.1,zz),.2,World.elevation(w,xx,zz-.1)-World.elevation(w,xx,zz+.1)]);
    const a=point(x,y),b=point(x,y+1),c=point(x+1,y),d=point(x+1,y+1),shade=.94+noise(x,y,11)*.10;
    const color=(type===6&&World.elevation(w,x,y)>4?(w.landscape.winter?[.76,.77,.76]:[.47,.48,.40]):paint).map(v=>v*shade),na=normal(x,y),nb=normal(x,y+1),nc=normal(x+1,y),nd=normal(x+1,y+1);
    g.triangle([a,b,c],[0,1,0],color,0,undefined,[na,nb,nc]);g.triangle([c,b,d],[0,1,0],color,0,undefined,[nc,nb,nd]);

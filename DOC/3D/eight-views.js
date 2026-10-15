@@ -29,16 +29,16 @@ var SpriteActors=(()=>{
  }
  function preloadChapter(chapter,priority='high'){
   const ch=Story.chapters[chapter];if(!ch)return Promise.reject(new Error('章節不存在：'+chapter));
-  return sourceReady.then(()=>Promise.all([ImagePreloader.load(ImagePreloader.chapterSource(ch.title),priority),ImagePreloader.load('DOC/美術素材/勝利小女孩.webp',priority),ImagePreloader.load('DOC/美術素材/自製圖片/道具圖鑑.webp',priority),...chapterNames(chapter).map(name=>load(name,priority))])).then(result=>{if(chapter===0)firstReady=true;return result});
+  return sourceReady.then(()=>Promise.all([LandscapeView.preload(priority),ImagePreloader.load(ImagePreloader.chapterSource(ch.title),priority),ImagePreloader.load('DOC/美術素材/勝利小女孩.webp',priority),ImagePreloader.load('DOC/美術素材/自製圖片/道具圖鑑.webp',priority),...chapterNames(chapter).map(name=>load(name,priority))])).then(result=>{if(chapter===0)firstReady=true;return result});
  }
  const ready=Promise.all([ChapterLoader.ready,sourceReady]).then(()=>Promise.all([preloadChapter(0),ImagePreloader.load('DOC/美術素材/勝利小女孩.webp','high'),ImagePreloader.load('DOC/美術素材/自製圖片/道具圖鑑.webp','high')])).then(()=>{firstReady=true});
  ready.catch(()=>{});
- function chapterReady(chapter){const ch=Story.chapters[chapter];return !!ch&&!!ImagePreloader.get(ImagePreloader.chapterSource(ch.title))&&!!ImagePreloader.get('DOC/美術素材/勝利小女孩.webp')&&!!ImagePreloader.get('DOC/美術素材/自製圖片/道具圖鑑.webp')&&chapterNames(chapter).every(name=>images.has(name))}
+ function chapterReady(chapter){const ch=Story.chapters[chapter];return !!ch&&LandscapeView.status.ready&&!!ImagePreloader.get(ImagePreloader.chapterSource(ch.title))&&!!ImagePreloader.get('DOC/美術素材/勝利小女孩.webp')&&!!ImagePreloader.get('DOC/美術素材/自製圖片/道具圖鑑.webp')&&chapterNames(chapter).every(name=>images.has(name))}
  function chapterProgress(chapter){
   const ch=Story.chapters[chapter];if(!ch)return {ready:0,total:0,percent:0,failed:0};
   const common=[ImagePreloader.chapterSource(ch.title),'DOC/美術素材/勝利小女孩.webp','DOC/美術素材/自製圖片/道具圖鑑.webp'],names=chapterNames(chapter);
-  const ready=common.filter(source=>ImagePreloader.get(source)).length+names.filter(name=>images.has(name)).length,total=common.length+names.length;
-  const failed=names.filter(name=>errors.has(name)).length+common.filter(source=>ImagePreloader.status.errors.includes(source)).length;
+  const ready=common.filter(source=>ImagePreloader.get(source)).length+names.filter(name=>images.has(name)).length+LandscapeView.status.loaded,total=common.length+names.length+LandscapeView.sources.length;
+  const failed=names.filter(name=>errors.has(name)).length+common.filter(source=>ImagePreloader.status.errors.includes(source)).length+LandscapeView.status.errors.length;
   return {ready,total,percent:Math.floor(ready/total*100),failed};
  }
  function background(){
