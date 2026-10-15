@@ -1,43 +1,75 @@
 <!doctype html>
 <html lang="zh-Hant">
-<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#142a26"><title>山河算策・劉備傳</title><link rel="preload" as="image" href="DOC/美術素材/各章節開幕圖/涿郡少年.webp" fetchpriority="high"><link rel="stylesheet" href="DOC/樣式/style.css"></head>
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#142a26"><title>山河算策・劉備傳</title>
+<style>
+/* 載入提示不等待外部樣式，慢速連線也能立即看見。 */
+[hidden]{display:none!important}
+.title-loading{box-sizing:border-box;position:fixed;z-index:8;top:94px;right:3vw;width:min(340px,40vw);display:grid;grid-template-columns:minmax(0,1fr) auto;gap:5px 10px;padding:13px 16px;color:#fff2d7;background:#142a26f5;border:1px solid #d7b67b;border-radius:6px;font:14px/1.55 system-ui,sans-serif;box-shadow:0 6px 24px #0006}
+.title-loading span{grid-column:1;align-self:center}.title-loading strong{grid-column:2;font-size:22px;color:#ffe1a0;font-variant-numeric:tabular-nums}.title-loading progress{grid-column:1/-1;width:100%;height:9px;accent-color:#dfbb76}.title-loading small{grid-column:1/-1;font-size:12px;color:#f0dfbc}
+@media(max-width:600px){.title-loading{top:76px;left:16px;right:16px;width:auto;padding:10px 13px;font-size:13px;gap:4px 8px}.title-loading strong{font-size:20px}.title-loading small{font-size:11px}}
+@media(min-width:601px) and (max-height:480px){.title-loading{top:80px}}
+</style>
+<script>
+/* 在外部 CSS／程式前註冊操作，進度只計算實際完成項目。 */
+var TitleLaunch=(()=>{
+ const loaded=new Set(),actions=new Set(['new-game','continue-game','title-settings','title-import','title-music','title-mv']);
+ let ready=false,pending=null,failed=false,targetChapter=0,waiting='',message='',previous='';
+ const root=()=>document.getElementById('title-screen');
+ const notice=()=>document.getElementById('title-loading');
+ function programProgress(){
+  const sources=new Set([...document.querySelectorAll('script[defer][src]')].map(script=>script.src));
+  for(const file of ['DOC/程式/js/puzzle-bank.js','DOC/程式/js/game.js'])sources.add(new URL(file,document.baseURI).href);
+  const count=[...sources].filter(source=>loaded.has(source)).length;
+  return {phase:'program',percent:Math.floor(count/sources.size*100),label:'正在下載遊戲程式',detail:'已完成 '+count+' / '+sources.size+' 個程式檔'};
+ }
+ function currentProgress(){
+  if(!ready)return programProgress();
+  const state=SpriteActors.chapterProgress(targetChapter);
+  return {phase:'images',percent:state.percent,complete:state.total>0&&state.ready===state.total,label:'正在載入第 '+(targetChapter+1)+' 章圖片',detail:'已準備 '+state.ready+' / '+state.total+' 張圖片'+(state.failed?' · 部分圖片需按啟程重試':'（含圖片解碼）')};
+ }
+ function render(){
+  const panel=notice(),title=root();if(!panel||!title)return;
+  if(title.hidden&&!waiting&&!message){panel.hidden=true;return}
+  const state=currentProgress(),show=!!(waiting||message||!state.complete),key=JSON.stringify([state,waiting,message,failed,show]);
+  if(key===previous)return;previous=key;panel.hidden=!show;panel.dataset.phase=failed?'error':state.phase;panel.setAttribute('aria-busy',String(!failed&&!state.complete));title.classList.toggle('launch-message',show);
+  panel.querySelector('span').textContent=message||waiting||state.label;
+  panel.querySelector('small').textContent=(message&&waiting?waiting+' ':'')+(waiting||message?state.label+' · ':'')+state.detail;
+  const percent=panel.querySelector('strong'),progress=panel.querySelector('progress');percent.textContent=state.percent+'%';percent.hidden=failed;progress.hidden=failed;progress.value=state.percent;progress.setAttribute('aria-label',state.label+'進度');
+ }
+ function clearBusy(){for(const button of root()?.querySelectorAll('[aria-busy]')||[])button.removeAttribute('aria-busy')}
+ function busy(text,chapter){clearBusy();waiting=text;message='';if(Number.isInteger(chapter))targetChapter=chapter;render()}
+ function idle(text=''){clearBusy();waiting='';message=text;render()}
+ async function fullscreen(){try{
+  if(typeof ScreenUI!=='undefined'){if(!await ScreenUI.fullscreen())throw Error();return}
+  if(document.fullscreenElement||document.webkitFullscreenElement){if(document.exitFullscreen)await document.exitFullscreen();else document.webkitExitFullscreen()}
+  else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen({navigationUI:'hide'});
+  else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else throw Error();
+ }catch{message='此瀏覽器未開放全螢幕，仍可繼續遊玩。';render()}}
+ document.addEventListener('click',event=>{
+  const button=event.target.closest?.('button');if(!button||!button.closest('#title-screen'))return;
+  if(button.id==='title-fullscreen'){event.preventDefault();event.stopImmediatePropagation();fullscreen();return}
+  if(!actions.has(button.id))return;
+  if(ready){Game.cancelStart();return}
+  event.preventDefault();event.stopImmediatePropagation();if(failed){location.reload();return}
+  pending=button.id;busy(button.id==='new-game'?'正在準備旅程，備妥後自動啟程…':button.id==='continue-game'?'正在準備存檔，備妥後自動繼續…':'正在載入，備妥後自動開啟…');button.setAttribute('aria-busy','true');
+ },true);
+ const isProgram=script=>script?.tagName==='SCRIPT'&&script.src&&(script.defer||/\/(?:puzzle-bank|game)\.js$/.test(script.src));
+ document.addEventListener('load',event=>{if(isProgram(event.target)){loaded.add(event.target.src);render()}},true);
+ document.addEventListener('error',event=>{if(isProgram(event.target)){failed=true;pending=null;waiting='';message='遊戲程式下載失敗，請確認連線，再按啟程重新載入。';render()}},true);
+ const sync=()=>{const full=document.getElementById('title-fullscreen');if(!full)return;const active=!!(document.fullscreenElement||document.webkitFullscreenElement);full.textContent=active?'退出全螢幕':'全螢幕';full.setAttribute('aria-pressed',String(active))};
+ document.addEventListener('fullscreenchange',sync);document.addEventListener('webkitfullscreenchange',sync);document.addEventListener('DOMContentLoaded',render);setInterval(()=>{if(!document.hidden)render()},250);
+ return {busy,idle,watchChapter(chapter){targetChapter=chapter;render()},ready(){ready=true;const id=pending;pending=null;idle();if(id){const button=document.getElementById(id);if(button.disabled)idle('尚無旅途存檔，請選擇啟程開始新旅程。');else button.click()}},fail(text){ready=false;failed=true;pending=null;waiting='';message=text+' 請確認連線，再按啟程重新載入。';render()}};
+})();
+</script>
+<link rel="preload" as="image" href="DOC/美術素材/各章節開幕圖/涿郡少年.webp" fetchpriority="high"><link rel="stylesheet" href="DOC/樣式/style.css"></head>
 <body>
+<div id="title-loading" class="title-loading" role="status" aria-live="polite" aria-busy="true" data-phase="program"><span>正在下載遊戲程式</span><strong>0%</strong><progress max="100" value="0" aria-label="遊戲程式載入進度"></progress><small>正在連線，請稍候；載入期間也可先按啟程。</small></div>
 <main id="title-screen" class="title-screen">
  <div class="hero-art"></div><div class="hero-shade"></div><div class="embers" aria-hidden="true"></div>
  <div class="title-top"><div class="title-credit"><strong>鍾元杰 AIGC 作品</strong><span>三國冒險 · 因數與倍數</span></div><div class="title-controls"><button id="title-fullscreen" class="ghost" aria-pressed="false">全螢幕</button><button id="title-settings" class="ghost">遊玩說明</button></div></div>
  <section class="title-copy"><div class="eyebrow">A JOURNEY THROUGH THE THREE KINGDOMS</div><h1>山河算策</h1><div class="title-sub"><i></i> 劉 備 傳 <i></i></div><p>以仁義聚群英，以算策定山河。<br>從一介布衣，走向天下太平。</p><div class="title-actions"><button id="new-game" class="primary">啟程 · 初入亂世 <span>→</span></button><button id="continue-game" class="secondary">繼續征途</button></div><nav class="title-media-actions" aria-label="音樂與預告"><button id="title-music" class="secondary">欣賞背景音樂</button><button id="title-mv" class="secondary">欣賞預告MV</button></nav><button id="title-import" class="text-button">匯入旅途存檔</button></section>
  <div class="title-bottom"><span>十八章旅程 · 自由探索 · 群英同行</span><span id="boot-status">正在載入十八章 3D 山河…</span></div>
 </main>
-<script>
-/* 起始操作不等待外部程式或圖片；待遊戲備妥後交接原本的按鈕流程。 */
-var TitleLaunch=(()=>{
- const root=document.getElementById('title-screen'),notice=document.createElement('div');
- notice.id='title-loading';notice.className='title-loading';notice.hidden=true;notice.setAttribute('role','status');notice.setAttribute('aria-live','polite');
- notice.innerHTML='<progress aria-label="準備旅程"></progress><span></span><small aria-hidden="true"></small>';document.body.appendChild(notice);
- const text=notice.querySelector('span'),count=notice.querySelector('small'),progress=notice.querySelector('progress');
- let ready=false,pending=null,timer=null,failed=false;
- function clear(){clearInterval(timer);timer=null;for(const button of root.querySelectorAll('[aria-busy]'))button.removeAttribute('aria-busy')}
- function busy(message){clear();notice.hidden=false;progress.hidden=false;root.classList.add('launch-message');text.textContent=message;count.textContent='';
-  const update=()=>{if(typeof ImagePreloader!=='undefined'){const n=ImagePreloader.status.ready;count.textContent=n?'已準備 '+n+' 張圖片':''}};update();timer=setInterval(update,500);
- }
- function idle(message=''){clear();progress.hidden=true;count.textContent='';text.textContent=message;notice.hidden=!message;root.classList.toggle('launch-message',!!message)}
- for(const id of ['new-game','continue-game','title-settings','title-import','title-music','title-mv']){
-  document.getElementById(id).addEventListener('click',event=>{if(ready){Game.cancelStart();return}event.preventDefault();event.stopImmediatePropagation();
-   if(failed){location.reload();return}pending=id;busy(id==='new-game'?'正在準備旅程，備妥後自動啟程…':id==='continue-game'?'正在準備存檔，備妥後自動繼續…':'正在載入，備妥後自動開啟…');event.currentTarget.setAttribute('aria-busy','true');
-  },true);
- }
- const full=document.getElementById('title-fullscreen');
- full.onclick=async()=>{try{
-  if(typeof ScreenUI!=='undefined'){if(!await ScreenUI.fullscreen())throw Error();return}
-  if(document.fullscreenElement||document.webkitFullscreenElement){if(document.exitFullscreen)await document.exitFullscreen();else document.webkitExitFullscreen()}
-  else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen({navigationUI:'hide'});
-  else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else throw Error();
- }catch{idle('此瀏覽器未開放全螢幕，仍可繼續遊玩。')}};
- const sync=()=>{const active=!!(document.fullscreenElement||document.webkitFullscreenElement);full.textContent=active?'退出全螢幕':'全螢幕';full.setAttribute('aria-pressed',String(active))};
- document.addEventListener('fullscreenchange',sync);document.addEventListener('webkitfullscreenchange',sync);
- return {busy,idle,ready(){ready=true;const id=pending;pending=null;idle();if(id){const button=document.getElementById(id);if(button.disabled)idle('尚無旅途存檔，請選擇啟程開始新旅程。');else button.click()}},fail(message){ready=false;failed=true;pending=null;idle(message+' 請確認連線，再按啟程重新載入。')}};
-})();
-</script>
 <main id="game" hidden>
 
  <div class="game-layout"><aside class="sidebar"><div class="sidebar-top"><section class="rank-panel" aria-label="階級與經驗"><div class="rank-heading"><button id="rank-title" title="查看階級與經驗規則">鐵牌</button><small id="rank-attack">攻擊 24</small><span id="xp-gain" aria-live="polite"></span></div><div id="rank-progress" class="rank-progress" role="progressbar" aria-label="升級經驗" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0"><i id="rank-fill"></i></div><div class="rank-detail"><span id="rank-detail">0 / 80 經驗</span><small id="rank-total">累積 0</small></div></section><div class="resources" aria-label="旅途資源"><span title="軍資"><i class="stat-icon">◈</i><b id="gold">80</b><small>錢</small></span><span title="行軍糧食"><i class="stat-icon">▧</i><b id="food">120</b><small>糧</small></span><span class="hp-stat"><i class="stat-icon">♥</i><b id="hp">100/100</b><small>生命</small></span></div><button id="sidebar-toggle" aria-expanded="false" aria-label="展開任務與伙伴">任務 ▾</button></div><div class="sidebar-story"><div class="eyebrow">THE JOURNEY</div><div id="chapter-label" class="chapter-label"></div><h2 id="chapter-name"></h2><p id="chapter-sub"></p><div class="rule"></div><div class="section-caption mission-caption">當前使命 <span>◆</span></div><div id="objectives"></div><button id="journal-button" class="text-button">查看任務手札 ↗</button><div class="rule"></div><div class="section-caption">同行伙伴 <span id="party-count"></span></div><div id="party-preview"></div><button id="party-button" class="text-button">整備隊伍 ↗</button><div class="sidebar-bottom"><span class="seal">仁</span><p>「惟賢惟德，能服於人。」<br><small>每一道解答，都是向前的一步。</small></p></div></div></aside>
@@ -50,7 +82,7 @@ var TitleLaunch=(()=>{
  <header><div><span class="eyebrow">旅途已暫停</span><h2 id="pause-title">旅途選單</h2></div><button id="pause-close" class="close-button" aria-label="返回遊戲">×</button></header>
  <p id="pause-context" class="pause-context">ESC 關閉選單，回到第一人稱探索。</p>
  <div class="pause-audio"><label class="quick-volume"><span>背景音量 <output id="volume-value">32%</output></span><input id="music-volume" aria-label="背景音樂音量" type="range" min="0" max="100" value="32"></label><button id="music-button" aria-pressed="true">音樂 開</button><button id="sound-button" aria-pressed="true">音效 開</button><button id="fullscreen-button" aria-pressed="false">全螢幕</button></div>
- <nav id="pause-actions" class="pause-actions"><button id="bag-button">▣ 行囊</button><button id="quest-mobile">✎ 任務手札</button><button id="pause-party">同行隊伍</button><button id="pause-campaign">山河成就</button><button id="notes-button">▤ 算術札記</button><button id="save-button">◇ 儲存進度</button><button id="map-button" class="minimap-button"><canvas id="minimap" width="192" height="128"></canvas><span>全境圖 M ↗</span></button><button id="pause-export">匯出存檔</button><button id="pause-import">匯入存檔</button><button id="pause-music">欣賞背景音樂</button><button id="pause-mv">欣賞預告MV</button><button id="pause-help">遊玩說明</button><button id="pause-chapters">章節旅程</button><button id="pause-replay">回看章節演出</button><button id="pause-title-button">返回開幕畫面</button></nav>
+ <nav id="pause-actions" class="pause-actions"><button id="bag-button">▣ 行囊</button><button id="quest-mobile">✎ 任務手札</button><button id="pause-party">同行隊伍</button><button id="pause-campaign">山河成就</button><button id="notes-button">▤ 算術札記</button><button id="save-button">◇ 儲存進度</button><button id="map-button" class="minimap-button"><canvas id="minimap" width="192" height="128"></canvas><span>全境圖 M ↗</span></button><button id="pause-export">匯出存檔</button><button id="pause-import">匯入存檔</button><button id="pause-music">欣賞背景音樂</button><button id="pause-mv">欣賞預告MV</button><a id="pause-feedback" href="https://docs.google.com/forms/d/e/1FAIpQLSf98t-awXA7dyYxta1kQWExaNa6beL4oO4lUf2RA1jT7c9Iqg/viewform?usp=header" target="_blank" rel="noopener noreferrer" aria-label="意見回饋（另開分頁）">意見回饋 ↗</a><button id="pause-help">遊玩說明</button><button id="pause-chapters">章節旅程</button><button id="pause-replay">回看章節演出</button><button id="pause-title-button">返回開幕畫面</button></nav>
  <div id="pause-settings"></div><div class="pause-bottom"><span id="save-status">旅途已就緒</span><button id="pause-resume" class="primary">繼續旅程 · ESC</button></div>
 </section></div>
 <input id="import-file" type="file" accept="application/json,.json" hidden>

@@ -34,6 +34,13 @@ var SpriteActors=(()=>{
  const ready=Promise.all([ChapterLoader.ready,sourceReady]).then(()=>Promise.all([preloadChapter(0),ImagePreloader.load('DOC/美術素材/勝利小女孩.webp','high'),ImagePreloader.load('DOC/美術素材/自製圖片/道具圖鑑.webp','high')])).then(()=>{firstReady=true});
  ready.catch(()=>{});
  function chapterReady(chapter){const ch=Story.chapters[chapter];return !!ch&&!!ImagePreloader.get(ImagePreloader.chapterSource(ch.title))&&!!ImagePreloader.get('DOC/美術素材/勝利小女孩.webp')&&!!ImagePreloader.get('DOC/美術素材/自製圖片/道具圖鑑.webp')&&chapterNames(chapter).every(name=>images.has(name))}
+ function chapterProgress(chapter){
+  const ch=Story.chapters[chapter];if(!ch)return {ready:0,total:0,percent:0,failed:0};
+  const common=[ImagePreloader.chapterSource(ch.title),'DOC/美術素材/勝利小女孩.webp','DOC/美術素材/自製圖片/道具圖鑑.webp'],names=chapterNames(chapter);
+  const ready=common.filter(source=>ImagePreloader.get(source)).length+names.filter(name=>images.has(name)).length,total=common.length+names.length;
+  const failed=names.filter(name=>errors.has(name)).length+common.filter(source=>ImagePreloader.status.errors.includes(source)).length;
+  return {ready,total,percent:Math.floor(ready/total*100),failed};
+ }
  function background(){
   if(!allReady)allReady=Promise.all([ChapterLoader.ready,sourceReady]).then(()=>preloadChapter(0)).then(()=>{
    const jobs=[ImagePreloader.load('DOC/美術素材/自製圖片/山河同慶.webp','low')];
@@ -117,5 +124,5 @@ var SpriteActors=(()=>{
   }
   return {draw,get status(){return {drawn:last.map(a=>({...a})),textures:textures.size}},dispose(){for(const e of textures.values())gl.deleteTexture(e.texture);textures.clear();gl.deleteBuffer(buffer);gl.deleteProgram(program);for(const s of shaders)gl.deleteShader(s)}};
  }
- return {ready,background,preloadChapter,chapterReady,chapterNames,has,resolve,view,bounds,add,gate,quad,portrait,pass,get status(){return {ready:firstReady,loaded:images.size===Object.keys(data).length,count:images.size,errors:[...errors.values()]}}};
+ return {ready,background,preloadChapter,chapterReady,chapterProgress,chapterNames,has,resolve,view,bounds,add,gate,quad,portrait,pass,get status(){return {ready:firstReady,loaded:images.size===Object.keys(data).length,count:images.size,errors:[...errors.values()]}}};
 })();

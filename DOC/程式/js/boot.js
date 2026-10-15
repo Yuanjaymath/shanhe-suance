@@ -3,6 +3,7 @@
  const status=document.getElementById('boot-status');
  try{
   await ChapterLoader.ready;let saved;try{saved=Core.load(localStorage.getItem('shanhe-save-v1'))}catch{}
+  TitleLaunch.watchChapter(saved?.chapter||0);
   for(const file of ['DOC/程式/js/puzzle-bank.js','DOC/程式/js/game.js'])await new Promise((resolve,reject)=>{const script=document.createElement('script');script.src=file;script.onload=resolve;script.onerror=()=>reject(new Error('遊戲程式未能載入。'));document.body.appendChild(script)});
   if(!Renderer.status.ready)throw new Error(Renderer.status.error||'此瀏覽器無法啟動 3D 畫面。');
   status.textContent='可先啟程 · 圖片於背景準備中';TitleLaunch.ready();

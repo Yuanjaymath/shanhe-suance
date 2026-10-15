@@ -83,15 +83,23 @@ var Core = (() => {
   }
   const topics=QuestionData.topics;
   const questionHistory=new Map();
-  const questionKey=q=>`${q.type}|${q.text}|${q.answer}`;
+  const questionKey=QuestionBank.signature;
   function question(chapter,settings={}){
     const prof=profile(chapter,settings),forced=Number.isInteger(settings.type)&&prof.types.includes(settings.type);
     const types=forced?[settings.type]:prof.types,key=`${prof.level}|${!!settings.animal}|${prof.battleTier}|${forced?settings.type:'all'}`;
-    if(!questionHistory.has(key))questionHistory.set(key,{recent:[],reserve:null});
+    if(!questionHistory.has(key))questionHistory.set(key,{recent:[],reserve:null,typeCounts:new Map(),groupCounts:new Map(),lastGroups:new Map(),lastType:null});
     const history=questionHistory.get(key);
-    const remember=q=>{history.recent.push(questionKey(q));if(history.recent.length>6)history.recent.shift();return q};
+    const remember=q=>{history.recent.push(questionKey(q));if(history.recent.length>6)history.recent.shift();history.lastType=q.type;history.typeCounts.set(q.type,(history.typeCounts.get(q.type)||0)+1);const group=QuestionBank.groupKey(q);history.groupCounts.set(group,(history.groupCounts.get(group)||0)+1);history.lastGroups.set(q.type,group);return q};
+    const chooseType=()=>{
+      // Small late-game subpools may exhaust their unseen questions. Wait for
+      // them to leave the recent window instead of repeating a solved question.
+      let available=types.filter(type=>QuestionBank.hasFresh(prof,type,history.recent));if(!available.length)available=types;
+      const different=available.filter(type=>type!==history.lastType);if(different.length)available=different;
+      const least=Math.min(...available.map(type=>history.typeCounts.get(type)||0)),choices=available.filter(type=>(history.typeCounts.get(type)||0)===least);
+      return choices[int(0,choices.length-1)];
+    };
     for(let attempt=0;attempt<16;attempt++){
-      const q=generateQuestion(prof,types[int(0,types.length-1)],int);
+      const q=generateQuestion(prof,chooseType(),int,history);
       if(!history.recent.includes(questionKey(q)))return remember(q);
     }
     // A bounded, independently seeded reserve still works when Math.random is stuck.
@@ -105,9 +113,9 @@ var Core = (() => {
       }
     }
     const available=history.reserve.find(q=>!history.recent.includes(questionKey(q)));
-    const q=available||history.reserve.reduce((oldest,next)=>history.recent.indexOf(questionKey(next))<history.recent.indexOf(questionKey(oldest))?next:oldest);
+    const q=available||history.reserve.reduce((oldest,next)=>history.recent.lastIndexOf(questionKey(next))<history.recent.lastIndexOf(questionKey(oldest))?next:oldest);
     return remember({...q,options:shuffle([...q.options])});
   }
-  function generateQuestion(prof,type,int){return QuestionBank.generate(prof,type,int)}
+  function generateQuestion(prof,type,int,history){return QuestionBank.generate(prof,type,int,history)}
   return {gcd,lcm,int,profile,question,topics,fresh,battle,answer,buy,use,load,items,attack,enemyTier,canChallenge,earn:Progression.earn};
 })();
