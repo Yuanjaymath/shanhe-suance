@@ -411,3 +411,17 @@ body.touch .camera-button{display:none}
  .listening-controls{margin-bottom:9px}
  .listening-slider{margin:6px 0}
 }
+
+/* Keep the opening footer above the viewport edge, including short desktop windows. */
+.title-bottom{bottom:calc(clamp(40px,7svh,80px) + env(safe-area-inset-bottom,0px))}
+@media(min-width:761px) and (min-height:541px) and (max-height:760px){
+ .title-copy{padding-top:96px;padding-bottom:80px}
+ .title-copy h1{margin-top:16px}
+ .title-sub{margin-bottom:20px}
+ .title-copy p{margin-bottom:20px}
+}
+@media(min-width:761px) and (min-height:541px) and (max-height:620px){
+ .title-copy{padding-top:80px;padding-bottom:64px}
+ .title-copy>.eyebrow{display:none}
+ .title-copy h1{font-size:76px;line-height:1.1}
+}

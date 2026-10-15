@@ -1,10 +1,14 @@
 /* All chapters use the supplied eight-view sheets with the existing depth buffer. */
 var SpriteActors=(()=>{
- const data={...(typeof EightViewData==='undefined'?{}:EightViewData),...(typeof GateArtData==='undefined'?{}:GateArtData)},images=new Map(),portraits=new Map(),errors=[];
- let loaded=false;
- const ready=Promise.all(Object.entries(data).map(([name,a])=>new Promise(resolve=>{
-  const image=new Image();image.onload=()=>{images.set(name,image);resolve()};image.onerror=()=>{errors.push(name+'：圖集載入失敗');resolve()};image.src=a.image;
- }))).then(()=>{loaded=true});
+ const data={...(typeof EightViewData==='undefined'?{}:EightViewData),...(typeof GateArtData==='undefined'?{}:GateArtData)},images=new Map(),portraits=new Map(),errors=new Map(),pending=new Map();
+ let firstReady=false,allReady=null;
+ // file:// images cannot be exported to portrait canvases or WebGL textures.
+ // Only the local-file edition loads this data-URL fallback; HTTP stays staged.
+ const sourceReady=location.protocol==='file:'?new Promise((resolve,reject)=>{
+  const script=document.createElement('script');script.src='DOC/3D8視角圖/離線圖像.js';
+  script.onload=()=>{for(const [name,asset]of Object.entries(EightViewData))if(data[name])data[name].image=asset.image;resolve()};
+  script.onerror=()=>reject(new Error('離線人物圖像載入失敗，請保留完整 DOC 資料夾。'));document.head.appendChild(script);
+ }):Promise.resolve();
  const aliases={'關隘守衛':'望樓守衛','虎牢守將':'山寨督軍','整軍啟程':'驛站驛丞','義軍營地':'巡防隊長','荊州密使':'江岸密使','長坂船夫':'船夫'};
  function resolve(name){
   const clean=String(name).split('・')[0];if(Object.hasOwn(data,clean))return clean;
@@ -13,6 +17,29 @@ var SpriteActors=(()=>{
   // shared appearances. Exact-name sheets always take priority when added later.
   const troop=/伏兵/.test(clean)?'林間伏兵':/槍兵/.test(clean)?'山道槍兵':/騎兵/.test(clean)?'追擊騎將':/刀兵|攻城兵|水兵|山賊|匪徒/.test(clean)?'守營刀兵':/兵|步卒/.test(clean)?'巡邏步卒':null;
   return troop&&Object.hasOwn(data,troop)?troop:null;
+ }
+ function load(name,priority='low'){
+  if(images.has(name))return Promise.resolve(images.get(name));const asset=data[name];if(!asset)return Promise.reject(new Error('缺少人物素材：'+name));
+  const request=ImagePreloader.load(asset.image,priority);if(pending.has(name))return pending.get(name);
+  const result=request.then(image=>{images.set(name,image);errors.delete(name);return image},error=>{errors.set(name,name+'：圖集載入失敗');throw error}).finally(()=>pending.delete(name));pending.set(name,result);return result;
+ }
+ function chapterNames(chapter){
+  const ch=Story.chapters[chapter];if(!ch)throw new Error('章節不存在：'+chapter);
+  return [...new Set(['劉備',...ch.clues.map(c=>c.name),ch.recruit,ch.boss,...(ch.world?.landscape?.enemyNames||[]),'驛站旅人','說書人','遊學先生','巡防隊長',...Object.values(Interiors.rooms).map(r=>r.host),'鹿','羊','豬','獅子','老虎','豹','狒狒','__gate-next','__gate-previous'].map(resolve).filter(Boolean))];
+ }
+ function preloadChapter(chapter,priority='high'){
+  const ch=Story.chapters[chapter];if(!ch)return Promise.reject(new Error('章節不存在：'+chapter));
+  return Promise.all([ImagePreloader.load(ImagePreloader.chapterSource(ch.title),priority),...chapterNames(chapter).map(name=>load(name,priority))]);
+ }
+ const ready=Promise.all([ChapterLoader.ready,sourceReady]).then(()=>Promise.all([preloadChapter(0),ImagePreloader.load('DOC/美術素材/勝利小女孩.webp','high'),ImagePreloader.load('DOC/美術素材/自製圖片/道具圖鑑.webp','high')])).then(()=>{firstReady=true});
+ function chapterReady(chapter){const ch=Story.chapters[chapter];return !!ch&&!!ImagePreloader.get(ImagePreloader.chapterSource(ch.title))&&chapterNames(chapter).every(name=>images.has(name))}
+ function background(){
+  if(!allReady)allReady=ready.then(()=>{
+   const jobs=[ImagePreloader.load('DOC/美術素材/自製圖片/山河同慶.webp','low')];
+   for(let chapter=1;chapter<18;chapter++)jobs.push(preloadChapter(chapter,'low'));
+   for(const name of Object.keys(data))jobs.push(load(name,'low'));
+   return Promise.allSettled(jobs);
+  });return allReady;
  }
  const has=(name,chapter)=>{const key=resolve(name);return Number.isInteger(chapter)&&chapter>=0&&chapter<18&&!!key&&!data[key].gate};
  // The source turns clockwise on screen: front, front-right, right, ... .
@@ -89,5 +116,5 @@ var SpriteActors=(()=>{
   }
   return {draw,get status(){return {drawn:last.map(a=>({...a})),textures:textures.size}},dispose(){for(const e of textures.values())gl.deleteTexture(e.texture);textures.clear();gl.deleteBuffer(buffer);gl.deleteProgram(program);for(const s of shaders)gl.deleteShader(s)}};
  }
- return {ready,has,resolve,view,bounds,add,gate,quad,portrait,pass,get status(){return {loaded,count:images.size,errors:errors.slice()}}};
+ return {ready,background,preloadChapter,chapterReady,chapterNames,has,resolve,view,bounds,add,gate,quad,portrait,pass,get status(){return {ready:firstReady,loaded:images.size===Object.keys(data).length,count:images.size,errors:[...errors.values()]}}};
 })();
