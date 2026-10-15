@@ -29,17 +29,18 @@ var SpriteActors=(()=>{
  }
  function preloadChapter(chapter,priority='high'){
   const ch=Story.chapters[chapter];if(!ch)return Promise.reject(new Error('章節不存在：'+chapter));
-  return Promise.all([ImagePreloader.load(ImagePreloader.chapterSource(ch.title),priority),...chapterNames(chapter).map(name=>load(name,priority))]);
+  return sourceReady.then(()=>Promise.all([ImagePreloader.load(ImagePreloader.chapterSource(ch.title),priority),ImagePreloader.load('DOC/美術素材/勝利小女孩.webp',priority),ImagePreloader.load('DOC/美術素材/自製圖片/道具圖鑑.webp',priority),...chapterNames(chapter).map(name=>load(name,priority))])).then(result=>{if(chapter===0)firstReady=true;return result});
  }
  const ready=Promise.all([ChapterLoader.ready,sourceReady]).then(()=>Promise.all([preloadChapter(0),ImagePreloader.load('DOC/美術素材/勝利小女孩.webp','high'),ImagePreloader.load('DOC/美術素材/自製圖片/道具圖鑑.webp','high')])).then(()=>{firstReady=true});
- function chapterReady(chapter){const ch=Story.chapters[chapter];return !!ch&&!!ImagePreloader.get(ImagePreloader.chapterSource(ch.title))&&chapterNames(chapter).every(name=>images.has(name))}
+ ready.catch(()=>{});
+ function chapterReady(chapter){const ch=Story.chapters[chapter];return !!ch&&!!ImagePreloader.get(ImagePreloader.chapterSource(ch.title))&&!!ImagePreloader.get('DOC/美術素材/勝利小女孩.webp')&&!!ImagePreloader.get('DOC/美術素材/自製圖片/道具圖鑑.webp')&&chapterNames(chapter).every(name=>images.has(name))}
  function background(){
-  if(!allReady)allReady=ready.then(()=>{
+  if(!allReady)allReady=Promise.all([ChapterLoader.ready,sourceReady]).then(()=>preloadChapter(0)).then(()=>{
    const jobs=[ImagePreloader.load('DOC/美術素材/自製圖片/山河同慶.webp','low')];
    for(let chapter=1;chapter<18;chapter++)jobs.push(preloadChapter(chapter,'low'));
    for(const name of Object.keys(data))jobs.push(load(name,'low'));
    return Promise.allSettled(jobs);
-  });return allReady;
+  }).catch(error=>{allReady=null;throw error});return allReady;
  }
  const has=(name,chapter)=>{const key=resolve(name);return Number.isInteger(chapter)&&chapter>=0&&chapter<18&&!!key&&!data[key].gate};
  // The source turns clockwise on screen: front, front-right, right, ... .

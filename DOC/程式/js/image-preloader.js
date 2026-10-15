@@ -26,7 +26,7 @@ var ImagePreloader=(()=>{
   job.promise=new Promise((resolve,reject)=>{job.resolve=resolve;job.reject=reject});records.set(url,job);queue.push(job);pump();return job.promise;
  }
  const chapterSource=title=>'DOC/美術素材/各章節開幕圖/'+encodeURIComponent(title)+'.webp';
- // Starts from the document head, before chapter data and the game initialize.
+ // The head preload starts chapter one; adopt it before chapter data initializes.
  const firstChapter=load(chapterSource('涿郡少年'),'high');firstChapter.catch(()=>{});
  return {load,chapterSource,firstChapter,get(source){const job=records.get(key(source));return job?.state==='ready'?job.image:null},get status(){return {active,queued:queue.length,ready:[...records.values()].filter(r=>r.state==='ready').length,errors:[...errors.values()]}}};
 })();
