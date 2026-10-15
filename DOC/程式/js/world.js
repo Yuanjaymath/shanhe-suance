@@ -59,7 +59,8 @@ var World=(()=>{
   // One person can carry several story roles without spawning a second body.
   const people=new Map();for(let i=0;i<entities.length;i++){const e=entities[i];if(!['clue','recruit','side','poet','scribe','captain'].includes(e.type))continue;const prior=people.get(e.name);if(!prior){people.set(e.name,e);continue}if(e.type==='recruit')prior.recruitable=true;prior.roleIds=[...(prior.roleIds||[prior.id]),e.id];entities.splice(i--,1)}
   const camp=entities.find(e=>e.id==='camp');
-  const w={width,height,tiles:finalTiles,blocked:finalBlocked,props,entities,start:{x:camp.x,y:camp.y},river:flipX?width-river-riverWidth:river,riverWidth,theme};
+  // Face along the open road through the town gate, including reflected chapters.
+  const w={width,height,tiles:finalTiles,blocked:finalBlocked,props,entities,start:{x:camp.x+(flipX?-2:2),y:camp.y,yaw:flipX?-Math.PI/2:Math.PI/2,pitch:-.10},river:flipX?width-river-riverWidth:river,riverWidth,theme};
   if(land.name)landscape(w,land,chapter,flipX,flipY,riverLeft);
   for(const e of w.entities){
     if(!['enemy','boss'].includes(e.type))continue;

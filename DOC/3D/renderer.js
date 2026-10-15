@@ -187,5 +187,5 @@ if(e.type==='room-exit'){const door=TerrainModels.exitGeometry(w);return [door.x
   return {label:a.label,finished};
  }
 
- return {init,resize,draw,refresh,map,toWorld,rotate,zoom,mountBattle,feedbackBattle,visible,project,pick,get yaw(){return camYaw},get status(){return {mode:'WebGL 3D',view:'first-person',ready:!!main,error,frames:frameCount,yaw:camYaw,pitch:camPitch,eye:camera?.eye.slice(),actorStyle:'eight-views',actors:main?.spriteStatus,grassVertices:main?.detailVertices,landscape:main?.landscapeStatus,battleActors:battleView?.engine.spriteStatus}},resetCamera(yaw=0){camYaw=yaw;camPitch=.08}};
+ return {init,resize,draw,refresh,map,toWorld,rotate,zoom,mountBattle,feedbackBattle,visible,project,pick,get yaw(){return camYaw},get status(){return {mode:'WebGL 3D',view:'first-person',ready:!!main,error,frames:frameCount,yaw:camYaw,pitch:camPitch,eye:camera?.eye.slice(),actorStyle:'eight-views',actors:main?.spriteStatus,grassVertices:main?.detailVertices,landscape:main?.landscapeStatus,battleActors:battleView?.engine.spriteStatus}},resetCamera(yaw=0,pitch=.08){camYaw=yaw;camPitch=pitch}};
 })();
