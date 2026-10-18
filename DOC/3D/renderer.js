@@ -154,8 +154,8 @@ if(e.type==='room-exit'){const door=TerrainModels.exitGeometry(w);return [door.x
   const now=performance.now(),a=view.action;
   if(a){a.elapsed+=view.lastAt===null?0:Math.max(0,now-view.lastAt);if(a.elapsed>=a.duration){view.action=null;a.resolve(true)}}
   view.lastAt=now;
-  const current=view.action,pose=BattleEffects.pose(current),weapon=s.gear?.equipped.weapon;
-  const heroPose={swing:pose.heroSwing,weapon:weapon==='iron_spear'?'spear':weapon==='dragon_blade'?'dragon':'blade'};
+  const current=view.action,pose=BattleEffects.pose(current),weapon=Gear.catalog[Gear.weaponId(s)]?.view;
+  const heroPose={swing:pose.heroSwing,weapon:weapon==='spear'||weapon==='army'?'spear':weapon==='dragon'||weapon==='halberd'?'dragon':'blade'};
   person(g,actors,'劉備',pose.heroX,0,Math.PI/2,!!current&&!current.reduced,t,s.chapter,1,heroPose);
   s.active.forEach((name,i)=>{const p=[[-3.0,-.1],[-4.2,-.1],[-5.4,-.1]][i]||[-6.6-i*.8,-.1];
    person(g,actors,name,p[0],p[1],Math.PI/2,false,t,s.chapter,1,name==='關羽'?{swing:null,weapon:'dragon'}:null)});
