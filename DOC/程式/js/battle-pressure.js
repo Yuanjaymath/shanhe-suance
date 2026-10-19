@@ -1,6 +1,6 @@
 /* Only unanswered enemy encounters accumulate pressure; learning activities remain untimed. */
 var BattlePressure=(()=>{
- const seconds=[30,45,60,75,90],damage=[4,7,10,14,18],labels=['簡單','一般','中等','進階','高難度'];
+ const labels=['簡單','一般','中等','進階','高難度'];
  const recipes=[
   'multiple digit zero_facts prime_factor_one factor_options',
   'factor_count prime_count rect_count factor_form factor_sum factor_pair gcd lcm coprime fraction_multiplier product_identity exponent_limit',
@@ -9,7 +9,7 @@ var BattlePressure=(()=>{
   'prime_parity equal_products rational_height exclude_multiples exact_two legend_inverse_filter legend_partition_remainder legend_area_cycles'
  ];
  const levels=new Map(recipes.flatMap((list,i)=>list.split(' ').map(name=>[name,i+1])));
- function rule(q={}){
+ function rule(q={},s={}){
   let level=levels.get(q.recipe)||4;const v=q.values||{},numbers=[];
   const collect=value=>{if(typeof value==='number'&&Number.isFinite(value))numbers.push(Math.abs(value));else if(Array.isArray(value))value.forEach(collect);else if(value&&typeof value==='object')Object.values(value).forEach(collect)};collect(v);
   const largest=Math.max(0,...numbers);
@@ -19,14 +19,15 @@ var BattlePressure=(()=>{
   if(q.recipe==='prime_count'&&v.hi-v.lo>40)level=Math.max(level,3);
   if(largest>=1000&&level<4)level++;
   if(Number.isInteger(q.pressureLevel)&&q.pressureLevel>=1&&q.pressureLevel<=5)level=q.pressureLevel;
-  return {level,label:labels[level-1],seconds:seconds[level-1],damage:damage[level-1]};
+  const rank=Progression.info(s).level,base=rank===1?10:rank<=5?15:rank<=8?20:25;
+  return {level,label:level<=2?'簡單':'較難',difficultyLabel:labels[level-1],seconds:level<=2?10:20,damage:base+(level>=3?5:0)};
  }
- function create(q,b){if(!b||b.animal||b.done)return null;const r=rule(q);return {rule:r,remaining:r.seconds,pending:false,struck:false,attacks:0}}
+ function create(q,b,s){if(!b||b.animal||b.done)return null;const r=rule(q,s);return {rule:r,remaining:r.seconds,pending:false,struck:false,attacks:0}}
  function tick(clock,elapsed,active){if(!clock||!active||clock.pending||!Number.isFinite(elapsed)||elapsed<=0)return false;clock.remaining=Math.max(0,clock.remaining-elapsed);if(clock.remaining>1e-7)return false;clock.remaining=0;clock.pending=true;return true}
  function strike(s,b,clock){
   if(!clock||!clock.pending||clock.struck||!b||b.done||s.gameOver||s.hp<=0)return {ignored:true};
-  clock.struck=true;clock.attacks++;
-  const guarded=!!b.guard,armor=Math.floor(Gear.defense(s)/2),ally=s.active.includes('張飛')?7:0,harm=guarded?0:Math.max(1,clock.rule.damage-armor-ally);
+  clock.rule=rule({pressureLevel:clock.rule.level},s);clock.struck=true;clock.attacks++;
+  const guarded=!!b.guard,armor=Math.floor(Gear.defense(s)/2),ally=s.active.includes('張飛')?3:0,harm=guarded?0:Math.max(1,clock.rule.damage-armor-ally);
   b.guard=false;s.hp=Math.max(0,s.hp-harm);if(!s.hp)b.done=true;
   return {damage:harm,guard:guarded,lose:!s.hp};
  }

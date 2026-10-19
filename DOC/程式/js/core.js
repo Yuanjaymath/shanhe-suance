@@ -86,6 +86,24 @@ var Core = (() => {
   const shuffle=a=>{for(let i=a.length-1;i>0;i--){const j=int(0,i);[a[i],a[j]]=[a[j],a[i]]}return a};
   const items={herb:{name:'金瘡藥',price:18,desc:'恢復 45 點體力',icon:'herb'},rice:{name:'行軍乾糧',price:15,desc:'補充 30 糧食',icon:'rice'},scroll:{name:'孔明錦囊',price:25,desc:'戰鬥中揭示解題步驟',icon:'scroll'},shield:{name:'護心符',price:30,desc:'抵擋下一次答錯傷害或敵軍主動反擊',icon:'shield'}};
   const fresh=()=>({version:1,progressionVersion:2,gameOver:false,room:null,puzzleSeed:int(1,9999999),chapter:0,x:10,y:34,hp:100,maxHp:100,gold:80,food:120,foodProgress:0,travelDistance:0,xp:0,level:1,attack:24,bag:{herb:3,rice:2,scroll:2,shield:1},equipment:[],gear:Gear.fresh(),party:[],active:[],flags:{},wrong:[],correct:0,total:0,steps:0,finished:false});
+  function defeatPlan(s){
+    const gold=Math.floor(s.gold/2),food=Math.floor(s.food/2),creditGold=Math.floor((s.gear.creditGold||0)/2),saleCreditGold=Math.floor((s.gear.saleCreditGold||0)/2);
+    return {restart:s.chapter<2,from:s.chapter,to:Math.max(0,s.chapter-2),gold,food,creditGold,saleCreditGold,goldLost:s.gold-gold,foodLost:s.food-food,pendingLost:Gear.pendingGold(s)-creditGold-saleCreditGold};
+  }
+  function recover(s){
+    if(!s.gameOver&&s.hp>0)return null;
+    const p=defeatPlan(s);if(p.restart)return fresh();
+    const next=JSON.parse(JSON.stringify(s));Gear.unlockedChapter(next);
+    next.chapter=p.to;next.x=10;next.y=34;next.room=null;next.hp=next.maxHp;next.gameOver=false;next.gold=p.gold;next.food=p.food;
+    next.gear.creditGold=p.creditGold;next.gear.saleCreditGold=p.saleCreditGold;
+    for(const key of Object.keys(next.flags)){
+      const match=/^(\d+)-(?:enemy\d+|forestEnemy\d+|boss|lvbu-trial)$/.exec(key);
+      if(match&&Number(match[1])>=p.to&&Number(match[1])<=p.from)delete next.flags[key];
+    }
+    for(let ch=p.to;ch<=p.from;ch++)next.flags['replay-'+ch]=true;
+    return next;
+  }
+  function chapterLimit(s){for(let ch=0;ch<18;ch++)if(s.flags['replay-'+ch]&&!s.flags[ch+'-boss'])return ch;return 17}
   const enemyTier=e=>{
     if(e.type==='animal')return 'animal';
     if(e.name==='呂布'||e.battleTier==='legendary')return 'legendary';
@@ -110,7 +128,7 @@ var Core = (() => {
         return {damage,win:true,gold,food,xp:progress.xp+reward.xp,levels:progress.levels+reward.levels,name:reward.name,fromLevel:progress.fromLevel??Progression.info(s).level-progress.levels-reward.levels,toLevel:Progression.info(s).level};
       }return {damage,...progress};
     }
-    b.combo=0;const damage=b.guard?0:Math.max(2,(b.animal?(b.fierce?11:7):14)+b.chapter-Gear.defense(s)-(s.active.includes('張飛')?7:0));
+    b.combo=0;const damage=b.guard?0:Math.max(2,(b.animal?(b.fierce?11:7):14)+b.chapter-Gear.defense(s)-(s.active.includes('張飛')?3:0));
     b.guard=false;s.hp=Math.max(0,s.hp-damage);if(!s.hp){b.done=true;return {damage,lose:true}}return {damage,xp:0};
   }
   function buy(s,id){const target=Gear.legacyTarget(id);if(target)return Gear.buy(s,target);const item=items[id];if(!item||s.gold+Gear.pendingGold(s)<item.price)return false;Gear.redeemCredit(s);s.gold-=item.price;s.bag[id]++;Gear.redeemCredit(s);return true}
@@ -166,5 +184,5 @@ var Core = (() => {
     return remember({...q,options:shuffle([...q.options])});
   }
   function generateQuestion(prof,type,int,history){return QuestionBank.generate(prof,type,int,history)}
-  return {gcd,lcm,int,profile,question,topics,fresh,battle,answer,buy,use,load,items,attack,enemyTier,canChallenge,earn:Progression.earn};
+  return {gcd,lcm,int,profile,question,topics,fresh,defeatPlan,recover,chapterLimit,battle,answer,buy,use,load,items,attack,enemyTier,canChallenge,earn:Progression.earn};
 })();
