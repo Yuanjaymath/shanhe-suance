@@ -39,16 +39,24 @@ var TitleLaunch=(()=>{
  function clearBusy(){for(const button of root()?.querySelectorAll('[aria-busy]')||[])button.removeAttribute('aria-busy')}
  function busy(text,chapter){clearBusy();waiting=text;message='';if(Number.isInteger(chapter))targetChapter=chapter;render()}
  function idle(text=''){clearBusy();waiting='';message=text;render()}
- async function fullscreen(){try{
+ let enteringFullscreen=false;
+ async function fullscreen(enterOnly=false){
+  if(enterOnly&&(enteringFullscreen||document.fullscreenElement||document.webkitFullscreenElement))return;
+  if(enterOnly)enteringFullscreen=true;
+  try{
   if(typeof ScreenUI!=='undefined'){if(!await ScreenUI.fullscreen())throw Error();return}
   if(document.fullscreenElement||document.webkitFullscreenElement){if(document.exitFullscreen)await document.exitFullscreen();else document.webkitExitFullscreen()}
   else if(document.documentElement.requestFullscreen)await document.documentElement.requestFullscreen({navigationUI:'hide'});
   else if(document.documentElement.webkitRequestFullscreen)document.documentElement.webkitRequestFullscreen();else throw Error();
- }catch{message='此瀏覽器未開放全螢幕，仍可繼續遊玩。';render()}}
+ }catch{if(!enterOnly){message='此瀏覽器未開放全螢幕，仍可繼續遊玩。';render()}}
+  finally{if(enterOnly)enteringFullscreen=false}
+ }
  document.addEventListener('click',event=>{
   const button=event.target.closest?.('button');if(!button||!button.closest('#title-screen'))return;
   if(button.id==='title-fullscreen'){event.preventDefault();event.stopImmediatePropagation();fullscreen();return}
   if(!actions.has(button.id))return;
+  // 直接使用玩家點擊的手勢請求；載入完成後重播待辦時不重複切換。
+  if((button.id==='new-game'||button.id==='continue-game')&&event.isTrusted)fullscreen(true);
   if(ready){Game.cancelStart();return}
   event.preventDefault();event.stopImmediatePropagation();if(failed){location.reload();return}
   pending=button.id;busy(button.id==='new-game'?'正在準備旅程，備妥後自動啟程…':button.id==='continue-game'?'正在準備存檔，備妥後自動繼續…':'正在載入，備妥後自動開啟…');button.setAttribute('aria-busy','true');
