@@ -33,10 +33,10 @@ var ScreenUI=(()=>{
   function render(){
    const width=Math.min(innerWidth-40,680),height=window.visualViewport?.height||innerHeight;
    const limit=Math.max(40,Math.min(180,Math.floor((height-230)/25)*Math.floor((width-90)/18)));
-   const chunks=value=>{const a=Array.from(value),result=[];while(a.length)result.push(a.splice(0,limit).join(''));return result};
+   const chunks=value=>MathText.chunks(value,limit);
    // Preserve brief dialogue + note on one page. Long text is paged, never clipped.
    const pages=(text.length+note.length<=limit)?[{body:text,note}]:[...chunks(text).map(body=>({body,note:''})),...chunks(note).map(note=>({body:'補充線索',note}))];
-   index=Math.min(index,pages.length-1);body.textContent=pages[index].body;noteEl.textContent=pages[index].note;noteEl.hidden=!pages[index].note;nav.replaceChildren();nav.hidden=pages.length===1;
+   index=Math.min(index,pages.length-1);MathText.set(body,pages[index].body);MathText.set(noteEl,pages[index].note);noteEl.hidden=!pages[index].note;nav.replaceChildren();nav.hidden=pages.length===1;
    if(pages.length>1){const prev=document.createElement('button'),next=document.createElement('button'),counter=document.createElement('span');prev.textContent='上一頁';next.textContent='下一頁';counter.textContent=(index+1)+' / '+pages.length;prev.disabled=index===0;next.disabled=index===pages.length-1;prev.onclick=()=>{index--;render()};next.onclick=()=>{index++;render()};nav.append(prev,counter,next)}
   }
   render();const resize=()=>{if(content.contains(nav))render();else window.removeEventListener('resize',resize)};window.addEventListener('resize',resize);cleanupDialogue=()=>window.removeEventListener('resize',resize);

@@ -455,3 +455,10 @@ body.touch .world-frame>.campaign-map{display:none}
 .modal[data-mode=battle]>header{gap:12px}.modal[data-mode=battle]>header>div:first-child{min-width:0;flex:0 1 auto}#battle-companion-benefits{display:flex;flex-direction:column;gap:3px;max-width:60%;margin-left:auto;font-size:12px;line-height:1.5;color:#254b3d}#battle-companion-benefits span{display:block;overflow-wrap:anywhere}
 @media(max-width:600px){.modal[data-mode=battle]>header{align-items:center;gap:8px}.modal[data-mode=battle]>header>div:first-child{flex:1 1 36%}#battle-companion-benefits{flex:1 1 60%;max-width:60%;margin-left:auto;gap:1px;font-size:11px}}
 @media(max-height:480px) and (min-width:600px){#battle-companion-benefits{font-size:11px;gap:1px}}
+
+/* 正式數學排版：原生 MathML 可直接離線顯示，不下載外部函式庫或字型。 */
+.math-formula{display:inline-block;max-width:100%;vertical-align:middle;overflow-x:auto;overflow-y:hidden;line-height:normal;padding:.16em .06em}
+.math-formula math{font-family:"Cambria Math","STIX Two Math","Noto Sans Math",math;font-size:1.08em;color:inherit}
+.answers .answer{min-height:52px}
+.answers .math-formula{vertical-align:middle}
+.dialogue-text:has(mfrac),.feedback:has(mfrac),.question:has(mfrac){line-height:2}
